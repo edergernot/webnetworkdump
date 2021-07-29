@@ -238,6 +238,7 @@ def dump():
 @app.route("/progress")
 def progress():
     global username, password, ip_network, ssh_enabled_ips, networkdevices
+    ssh_enabled_ips=[]
     form = DeviceDiscoveryForm()
     ssh_enabled_ips=tcpscan(ip_network)
     return render_template("progress.html", ip_network=ip_network, title="TCP Scan", hosts=ssh_enabled_ips)

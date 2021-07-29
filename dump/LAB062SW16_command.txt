@@ -1,0 +1,1578 @@
+
+****************************************
+show clock
+**----------------------------------------**
+*06:34:01.069 UTC Sat Aug 14 1993
+****************************************
+show version
+**----------------------------------------**
+Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 12.2(55)SE11, RELEASE SOFTWARE (fc3)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2016 by Cisco Systems, Inc.
+Compiled Wed 17-Aug-16 13:46 by prod_rel_team
+Image text-base: 0x00003000, data-base: 0x01900000
+
+ROM: Bootstrap program is C2960 boot loader
+BOOTLDR: C2960 Boot Loader (C2960-HBOOT-M) Version 12.2(35r)SE2, RELEASE SOFTWARE (fc1)
+
+LAB062SW16 uptime is 23 weeks, 5 days, 6 hours, 34 minutes
+System returned to ROM by power-on
+System image file is "flash:c2960-lanbasek9-mz.122-55.SE11.bin"
+
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+cisco WS-C2960-8TC-L (PowerPC405) processor (revision C0) with 65536K bytes of memory.
+Processor board ID FOC1406W88F
+Last reset from power-on
+2 Virtual Ethernet interfaces
+8 FastEthernet interfaces
+1 Gigabit Ethernet interface
+The password-recovery mechanism is enabled.
+
+64K bytes of flash-simulated non-volatile configuration memory.
+Base ethernet MAC Address       : FC:FB:FB:5E:E1:00
+Motherboard assembly number     : 73-10611-07
+Power supply part number        : 341-0208-01
+Motherboard serial number       : FOC14064P5M
+Power supply serial number      : LIT13510DNK
+Model revision number           : C0
+Motherboard revision number     : D0
+Model number                    : WS-C2960-8TC-L
+System serial number            : FOC1406W88F
+Top Assembly Part Number        : 800-28132-02
+Top Assembly Revision Number    : A0
+Version ID                      : V02
+CLEI Code Number                : COM8A00ARB
+Hardware Board Revision Number  : 0x01
+
+
+Switch Ports Model              SW Version            SW Image
+------ ----- -----              ----------            ----------
+*    1 9     WS-C2960-8TC-L     12.2(55)SE11          C2960-LANBASEK9-M
+
+
+Configuration register is 0xF
+****************************************
+show running
+**----------------------------------------**
+Building configuration...
+
+Current configuration : 4506 bytes
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname LAB062SW16
+!
+boot-start-marker
+boot-end-marker
+!
+!
+username kapsch privilege 15 secret 5 $1$uhFU$vxXs17.S4ERHuVw/UwWke.
+!
+!
+aaa new-model
+!
+!
+aaa authentication login default local
+aaa authorization exec default local if-authenticated
+!
+!
+!
+aaa session-id common
+system mtu routing 1500
+vtp domain KBC-Graz-LAB
+vtp mode transparent
+!
+!
+ip domain-name kapsch-lab.net
+!
+!
+crypto pki trustpoint TP-self-signed-4217299200
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4217299200
+ revocation-check none
+ rsakeypair TP-self-signed-4217299200
+!
+!
+crypto pki certificate chain TP-self-signed-4217299200
+ certificate self-signed 01
+  30820251 308201BA A0030201 02020101 300D0609 2A864886 F70D0101 04050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 34323137 32393932 3030301E 170D3933 30333031 30303031
+  35365A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D34 32313732
+  39393230 3030819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281
+  8100DEEC 7D2736D5 BD559E22 0D8D57B6 AB7F7908 50318126 6DDF26C8 94C6DCE7
+  C3AF7D6A 34463D12 531D7F94 3ADF0605 7C595A60 1DA33D03 3F2B5BD5 EC382010
+  627A7110 3C4B94B8 8BD5BB63 FA57EF5D E994ABD4 B6C86AFC 68A9947D 440A98DC
+  891A0B00 A231AED3 E72E3FF7 7DEFD60E 2D7D5187 794B5CB1 9E4B9B37 763D766D
+  1F970203 010001A3 79307730 0F060355 1D130101 FF040530 030101FF 30240603
+  551D1104 1D301B82 194C4142 30363253 5731362E 6B617073 63682D6C 61622E6E
+  6574301F 0603551D 23041830 1680141F 64126B85 2FFBDC5E 6396DC9A DBF9789A
+  B19F5C30 1D060355 1D0E0416 04141F64 126B852F FBDC5E63 96DC9ADB F9789AB1
+  9F5C300D 06092A86 4886F70D 01010405 00038181 00444E9E 186D4B7D 4433FF26
+  CBF93E7D 7F5950FC 97175F78 75619687 70A7CF57 7ED2251F E5996EC4 A6A8D419
+  4D655481 440CA226 10182ABD E4D00DBC 3F2708A0 652B39CF 12A46D6F B322493B
+  3DF526BA 307E9D64 0C585705 3D0C55C8 965C49FC 9817CD61 04998106 44E0A373
+  0E84F404 4ED9F681 A5AD5594 6801E853 372AFDA3 9C
+  quit
+!
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+vlan 10
+ name LAB062-INFRA
+!
+vlan 15
+ name EDERG_insideGNS3
+!
+vlan 99
+ name n_172_016_255_000_24
+!
+vlan 100
+ name Paloalto-Inside
+!
+vlan 101
+ name Lab-Lackner
+!
+vlan 102
+ name Videokonferenz
+!
+vlan 103
+ name Lab-ZoehrerAndi
+!
+vlan 104
+ name Lab-NeumeisterP
+!
+vlan 105
+ name Lab-Ederg
+!
+vlan 106
+ name Lab-Mitterling-ARUBA
+!
+vlan 600
+ name IPv6_Outside
+!
+vlan 601
+ name IPv6_Inside
+!
+vlan 666
+ name Internet
+!
+vlan 700,705
+!
+ip ssh version 2
+!
+!
+interface FastEthernet0/1
+ description LAB-Ederg
+ switchport access vlan 705
+ switchport trunk native vlan 10
+ switchport trunk allowed vlan 10
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/2
+ description Herbert
+ switchport access vlan 705
+ switchport trunk native vlan 10
+ switchport trunk allowed vlan 10,30
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/3
+ description LAB-Ederg
+ switchport access vlan 705
+ switchport trunk allowed vlan 30
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/4
+ description LAB-Ederg
+ switchport access vlan 705
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/5
+ description LAB-Ederg
+ switchport access vlan 705
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/6
+ description LAB-Ederg
+ switchport access vlan 705
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/7
+ description LAB-Ederg
+ switchport access vlan 705
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/8
+ description LAB-Ederg
+ switchport access vlan 705
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet0/1
+ switchport mode trunk
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan10
+ ip address 10.0.11.16 255.255.255.0
+!
+ip default-gateway 10.0.11.1
+ip http server
+ip http secure-server
+!
+ip access-list standard SNMP
+ permit 10.0.11.0 0.0.0.255
+kron occurrence VPN in 5 recurring system-startup
+ policy-list VPN
+!
+snmp-server community 260BAL RO SNMP
+snmp-server community 260LAB! RW SNMP
+snmp-server community snmpRW RW
+snmp-server community snmpRO RO
+snmp-server location LAB062:Buero:Nehl
+!
+line con 0
+line vty 5 15
+!
+end
+****************************************
+show inventory
+**----------------------------------------**
+NAME: "1", DESCR: "WS-C2960-8TC-L"
+PID: WS-C2960-8TC-L    , VID: V02  , SN: FOC1406W88F
+****************************************
+show cdp neighbors detail
+**----------------------------------------**
+-------------------------
+Device ID: LAB062SW15.kapsch-lab.net
+Entry address(es):
+  IP address: 10.0.11.15
+Platform: cisco WS-C2960S-48TD-L,  Capabilities: Switch IGMP
+Interface: GigabitEthernet0/1,  Port ID (outgoing port): GigabitEthernet1/0/25
+Holdtime : 159 sec
+
+Version :
+Cisco IOS Software, C2960S Software (C2960S-UNIVERSALK9-M), Version 12.2(55)SE5, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2012 by Cisco Systems, Inc.
+Compiled Thu 09-Feb-12 19:22 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF010221FF000000000000B4A4E3793400FF0000
+VTP Management Domain: 'LAB062'
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.0.11.15
+****************************************
+show ip interface brief
+**----------------------------------------**
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  unassigned      YES NVRAM  administratively down down
+Vlan10                 10.0.11.16      YES NVRAM  up                    up
+FastEthernet0/1        unassigned      YES unset  down                  down
+FastEthernet0/2        unassigned      YES unset  down                  down
+FastEthernet0/3        unassigned      YES unset  down                  down
+FastEthernet0/4        unassigned      YES unset  down                  down
+FastEthernet0/5        unassigned      YES unset  down                  down
+FastEthernet0/6        unassigned      YES unset  down                  down
+FastEthernet0/7        unassigned      YES unset  down                  down
+FastEthernet0/8        unassigned      YES unset  down                  down
+GigabitEthernet0/1     unassigned      YES unset  up                    up
+****************************************
+show interfaces
+**----------------------------------------**
+Vlan1 is administratively down, line protocol is down
+  Hardware is EtherSVI, address is fcfb.fb5e.e140 (bia fcfb.fb5e.e140)
+  MTU 1500 bytes, BW 1000000 Kbit, DLY 10 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive not supported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:01:09, output never, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     291865 packets input, 103109763 bytes, 0 no buffer
+     Received 0 broadcasts (0 IP multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 packets output, 0 bytes, 0 underruns
+     0 output errors, 1 interface resets
+     0 output buffer failures, 0 output buffers swapped out
+Vlan10 is up, line protocol is up
+  Hardware is EtherSVI, address is fcfb.fb5e.e141 (bia fcfb.fb5e.e141)
+  Internet address is 10.0.11.16/24
+  MTU 1500 bytes, BW 1000000 Kbit, DLY 10 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive not supported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:00:00, output 00:00:00, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 2/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 2000 bits/sec, 2 packets/sec
+  5 minute output rate 2000 bits/sec, 1 packets/sec
+     65192417 packets input, 4805861792 bytes, 0 no buffer
+     Received 0 broadcasts (0 IP multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     627717 packets output, 163214978 bytes, 0 underruns
+     0 output errors, 2 interface resets
+     0 output buffer failures, 0 output buffers swapped out
+FastEthernet0/1 is down, line protocol is down (notconnect)
+  Hardware is Fast Ethernet, address is fcfb.fb5e.e101 (bia fcfb.fb5e.e101)
+  Description: LAB-Ederg
+  MTU 1500 bytes, BW 100000 Kbit, DLY 100 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Auto-duplex, Auto-speed, media type is 10/100BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 1w3d, output 1w3d, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 199919
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     26786854 packets input, 7355917271 bytes, 0 no buffer
+     Received 1211536 broadcasts (1069916 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 1069916 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     32039605 packets output, 20753897265 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 PAUSE output
+     0 output buffer failures, 0 output buffers swapped out
+FastEthernet0/2 is down, line protocol is down (notconnect)
+  Hardware is Fast Ethernet, address is fcfb.fb5e.e102 (bia fcfb.fb5e.e102)
+  Description: Herbert
+  MTU 1500 bytes, BW 10000 Kbit, DLY 1000 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Auto-duplex, Auto-speed, media type is 10/100BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input never, output never, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     0 packets input, 0 bytes, 0 no buffer
+     Received 0 broadcasts (0 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 0 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     0 packets output, 0 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 PAUSE output
+     0 output buffer failures, 0 output buffers swapped out
+FastEthernet0/3 is down, line protocol is down (notconnect)
+  Hardware is Fast Ethernet, address is fcfb.fb5e.e103 (bia fcfb.fb5e.e103)
+  Description: LAB-Ederg
+  MTU 1500 bytes, BW 100000 Kbit, DLY 100 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Auto-duplex, Auto-speed, media type is 10/100BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 22w4d, output 22w4d, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 3967
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     263220 packets input, 53551564 bytes, 0 no buffer
+     Received 7447 broadcasts (5365 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 5365 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     682217 packets output, 485822628 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 PAUSE output
+     0 output buffer failures, 0 output buffers swapped out
+FastEthernet0/4 is down, line protocol is down (notconnect)
+  Hardware is Fast Ethernet, address is fcfb.fb5e.e104 (bia fcfb.fb5e.e104)
+  Description: LAB-Ederg
+  MTU 1500 bytes, BW 100000 Kbit, DLY 100 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Auto-duplex, Auto-speed, media type is 10/100BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 4d02h, output 4d02h, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 329481
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     12198119 packets input, 5591771159 bytes, 0 no buffer
+     Received 140978 broadcasts (117894 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 117894 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     22286236 packets output, 17125307683 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 PAUSE output
+     0 output buffer failures, 0 output buffers swapped out
+FastEthernet0/5 is down, line protocol is down (notconnect)
+  Hardware is Fast Ethernet, address is fcfb.fb5e.e105 (bia fcfb.fb5e.e105)
+  Description: LAB-Ederg
+  MTU 1500 bytes, BW 10000 Kbit, DLY 1000 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Auto-duplex, Auto-speed, media type is 10/100BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input never, output never, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     0 packets input, 0 bytes, 0 no buffer
+     Received 0 broadcasts (0 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 0 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     0 packets output, 0 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 PAUSE output
+     0 output buffer failures, 0 output buffers swapped out
+FastEthernet0/6 is down, line protocol is down (notconnect)
+  Hardware is Fast Ethernet, address is fcfb.fb5e.e106 (bia fcfb.fb5e.e106)
+  Description: LAB-Ederg
+  MTU 1500 bytes, BW 100000 Kbit, DLY 100 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Auto-duplex, Auto-speed, media type is 10/100BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input never, output 23w5d, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 11181
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     305467 packets input, 26447614 bytes, 0 no buffer
+     Received 1704 broadcasts (0 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 0 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     481010 packets output, 698280602 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 PAUSE output
+     0 output buffer failures, 0 output buffers swapped out
+FastEthernet0/7 is down, line protocol is down (notconnect)
+  Hardware is Fast Ethernet, address is fcfb.fb5e.e107 (bia fcfb.fb5e.e107)
+  Description: LAB-Ederg
+  MTU 1500 bytes, BW 100000 Kbit, DLY 100 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Auto-duplex, Auto-speed, media type is 10/100BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input never, output 19w0d, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 452
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     71344 packets input, 5183907 bytes, 0 no buffer
+     Received 197 broadcasts (0 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 0 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     137582 packets output, 204998318 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 PAUSE output
+     0 output buffer failures, 0 output buffers swapped out
+FastEthernet0/8 is down, line protocol is down (notconnect)
+  Hardware is Fast Ethernet, address is fcfb.fb5e.e108 (bia fcfb.fb5e.e108)
+  Description: LAB-Ederg
+  MTU 1500 bytes, BW 100000 Kbit, DLY 100 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Auto-duplex, Auto-speed, media type is 10/100BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input never, output 23w5d, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     0 packets input, 0 bytes, 0 no buffer
+     Received 0 broadcasts (0 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 0 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     23 packets output, 5108 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 PAUSE output
+     0 output buffer failures, 0 output buffers swapped out
+GigabitEthernet0/1 is up, line protocol is up (connected)
+  Hardware is Gigabit Ethernet, address is fcfb.fb5e.e109 (bia fcfb.fb5e.e109)
+  MTU 1500 bytes, BW 1000000 Kbit, DLY 10 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive not set
+  Full-duplex, 1000Mb/s, link type is auto, media type is 10/100/1000BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:00:00, output 00:00:00, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 36000 bits/sec, 59 packets/sec
+  5 minute output rate 2000 bits/sec, 2 packets/sec
+     986982205 packets input, 119831801264 bytes, 0 no buffer
+     Received 924143978 broadcasts (729654162 multicasts)
+     0 runts, 0 giants, 0 throttles
+     208 input errors, 164 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 729654162 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     62373813 packets output, 15045163679 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 PAUSE output
+     0 output buffer failures, 0 output buffers swapped out
+****************************************
+show interface trunk
+**----------------------------------------**
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/1       on               802.1q         trunking      1
+
+Port        Vlans allowed on trunk
+Gi0/1       1-4094
+
+Port        Vlans allowed and active in management domain
+Gi0/1       1,10,15,99-106,600-601,666,700,705
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gi0/1       1,10,15,99-106,600-601,666,700,705
+****************************************
+show interfaces status
+**----------------------------------------**
+Port      Name               Status       Vlan       Duplex  Speed Type
+Fa0/1     LAB-Ederg          notconnect   705          auto   auto 10/100BaseTX
+Fa0/2     Herbert            notconnect   705          auto   auto 10/100BaseTX
+Fa0/3     LAB-Ederg          notconnect   705          auto   auto 10/100BaseTX
+Fa0/4     LAB-Ederg          notconnect   705          auto   auto 10/100BaseTX
+Fa0/5     LAB-Ederg          notconnect   705          auto   auto 10/100BaseTX
+Fa0/6     LAB-Ederg          notconnect   705          auto   auto 10/100BaseTX
+Fa0/7     LAB-Ederg          notconnect   705          auto   auto 10/100BaseTX
+Fa0/8     LAB-Ederg          notconnect   705          auto   auto 10/100BaseTX
+Gi0/1                        connected    trunk      a-full a-1000 10/100/1000BaseTX
+****************************************
+show etherchannel summary
+**----------------------------------------**
+Flags:  D - down        P - bundled in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+
+        M - not in use, minimum links not met
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 0
+Number of aggregators:           0
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+****************************************
+show mac address-table
+**----------------------------------------**
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+ All    0100.0ccc.cccc    STATIC      CPU
+ All    0100.0ccc.cccd    STATIC      CPU
+ All    0180.c200.0000    STATIC      CPU
+ All    0180.c200.0001    STATIC      CPU
+ All    0180.c200.0002    STATIC      CPU
+ All    0180.c200.0003    STATIC      CPU
+ All    0180.c200.0004    STATIC      CPU
+ All    0180.c200.0005    STATIC      CPU
+ All    0180.c200.0006    STATIC      CPU
+ All    0180.c200.0007    STATIC      CPU
+ All    0180.c200.0008    STATIC      CPU
+ All    0180.c200.0009    STATIC      CPU
+ All    0180.c200.000a    STATIC      CPU
+ All    0180.c200.000b    STATIC      CPU
+ All    0180.c200.000c    STATIC      CPU
+ All    0180.c200.000d    STATIC      CPU
+ All    0180.c200.000e    STATIC      CPU
+ All    0180.c200.000f    STATIC      CPU
+ All    0180.c200.0010    STATIC      CPU
+ All    ffff.ffff.ffff    STATIC      CPU
+ 705    000c.29a9.852d    DYNAMIC     Gi0/1
+ 705    0086.9c6b.9a12    DYNAMIC     Gi0/1
+ 705    b4a4.e379.3419    DYNAMIC     Gi0/1
+ 705    f092.1c10.3088    DYNAMIC     Gi0/1
+   1    9077.eeec.a751    DYNAMIC     Gi0/1
+   1    b4a4.e379.3419    DYNAMIC     Gi0/1
+  10    000c.297a.d43b    DYNAMIC     Gi0/1
+  10    002a.6ab3.5ba1    DYNAMIC     Gi0/1
+  10    0050.56b2.14dd    DYNAMIC     Gi0/1
+  10    0050.56b2.88b4    DYNAMIC     Gi0/1
+  10    0050.56b2.d028    DYNAMIC     Gi0/1
+  10    08f1.eaeb.75ae    DYNAMIC     Gi0/1
+  10    08f1.eaeb.7bde    DYNAMIC     Gi0/1
+  10    245e.be39.e277    DYNAMIC     Gi0/1
+  10    245e.be39.e278    DYNAMIC     Gi0/1
+  10    24a9.3706.6dd0    DYNAMIC     Gi0/1
+  10    24a9.3706.a8a3    DYNAMIC     Gi0/1
+  10    28ac.9e41.ed35    DYNAMIC     Gi0/1
+  10    346f.90b8.09c6    DYNAMIC     Gi0/1
+  10    3863.bb32.2dfe    DYNAMIC     Gi0/1
+  10    3863.bb32.32ca    DYNAMIC     Gi0/1
+  10    3863.bb32.6414    DYNAMIC     Gi0/1
+  10    3863.bb32.ac84    DYNAMIC     Gi0/1
+  10    547f.eeff.72e1    DYNAMIC     Gi0/1
+  10    8e61.fe60.1db7    DYNAMIC     Gi0/1
+  10    b4a4.e379.3419    DYNAMIC     Gi0/1
+  10    ecb1.d781.d682    DYNAMIC     Gi0/1
+  99    b4a4.e379.3419    DYNAMIC     Gi0/1
+ 100    0200.ac11.0004    DYNAMIC     Gi0/1
+ 100    0200.ac11.0005    DYNAMIC     Gi0/1
+ 100    b4a4.e379.3419    DYNAMIC     Gi0/1
+ 101    566f.8315.0001    DYNAMIC     Gi0/1
+ 101    566f.8315.0005    DYNAMIC     Gi0/1
+ 101    566f.8315.0007    DYNAMIC     Gi0/1
+ 101    566f.8315.0008    DYNAMIC     Gi0/1
+ 101    566f.8315.0009    DYNAMIC     Gi0/1
+ 101    566f.8315.000a    DYNAMIC     Gi0/1
+ 101    566f.8315.000b    DYNAMIC     Gi0/1
+ 101    566f.8315.000c    DYNAMIC     Gi0/1
+ 101    566f.8315.0017    DYNAMIC     Gi0/1
+ 101    566f.8315.001c    DYNAMIC     Gi0/1
+ 101    b4a4.e379.3419    DYNAMIC     Gi0/1
+ 102    b4a4.e379.3419    DYNAMIC     Gi0/1
+ 103    0200.15a9.d7a5    DYNAMIC     Gi0/1
+ 103    b4a4.e379.3419    DYNAMIC     Gi0/1
+ 104    b4a4.e379.3419    DYNAMIC     Gi0/1
+ 105    b4a4.e379.3419    DYNAMIC     Gi0/1
+ 106    687d.b4dd.acfc    DYNAMIC     Gi0/1
+ 106    b4a4.e379.3419    DYNAMIC     Gi0/1
+ 106    d0d3.e0c9.1e0e    DYNAMIC     Gi0/1
+ 666    105a.f77a.628f    DYNAMIC     Gi0/1
+ 666    b4a4.e379.3419    DYNAMIC     Gi0/1
+ 700    0086.9c6b.9a00    DYNAMIC     Gi0/1
+ 700    b4a4.e379.3419    DYNAMIC     Gi0/1
+Total Mac Addresses for this criterion: 74
+****************************************
+show ip route
+**----------------------------------------**
+                    ^
+% Invalid input detected at '^' marker.
+****************************************
+show arp
+**----------------------------------------**
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.0.11.1               1   346f.90b8.09c6  ARPA   Vlan10
+Internet  10.0.11.16              -   fcfb.fb5e.e141  ARPA   Vlan10
+Internet  10.0.11.32             16   5254.003f.ef3c  ARPA   Vlan10
+****************************************
+show access-lists
+**----------------------------------------**
+Standard IP access list SNMP
+    10 permit 10.0.11.0, wildcard bits 0.0.0.255 (1010450 matches)
+****************************************
+show ip arp
+**----------------------------------------**
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.0.11.1               1   346f.90b8.09c6  ARPA   Vlan10
+Internet  10.0.11.16              -   fcfb.fb5e.e141  ARPA   Vlan10
+Internet  10.0.11.32             16   5254.003f.ef3c  ARPA   Vlan10
+****************************************
+show ip protocols
+**----------------------------------------**
+                    ^
+% Invalid input detected at '^' marker.
+****************************************
+show ip route
+**----------------------------------------**
+                    ^
+% Invalid input detected at '^' marker.
+****************************************
+show ipv6 route
+**----------------------------------------**
+% Specified IPv6 routing table does not exist
+****************************************
+show ipv6 neighborsshow ip mroute
+**----------------------------------------**
+                              ^
+% Invalid input detected at '^' marker.
+****************************************
+show power inline
+**----------------------------------------**
+Available:0.0(w)  Used:0.0(w)  Remaining:0.0(w)
+
+Interface Admin  Oper       Power   Device              Class Max
+                            (Watts)
+--------- ------ ---------- ------- ------------------- ----- ----
+****************************************
+show standby all
+**----------------------------------------**
+
+****************************************
+show ip vrf
+**----------------------------------------**
+                    ^
+% Invalid input detected at '^' marker.
+****************************************
+show lldp
+**----------------------------------------**
+% LLDP is not enabled
+****************************************
+show lldp neighbors detail
+**----------------------------------------**
+% LLDP is not enabled
+****************************************
+show processes cpu history
+**----------------------------------------**
+    444441111                                   11111     1111
+    0000055555555566666444445555555555555557777722222555552222
+100
+ 90
+ 80
+ 70
+ 60
+ 50
+ 40 *****
+ 30 *****
+ 20 *********
+ 10 *******************     **********************************
+   0....5....1....1....2....2....3....3....4....4....5....5....
+             0    5    0    5    0    5    0    5    0    5
+               CPU% per second (last 60 seconds)
+
+    1111111111111111111111111111111111111111111111 13311111111
+    4330323222222223303232322222222220403234321331913332333333
+100
+ 90
+ 80
+ 70
+ 60
+ 50
+ 40
+ 30                                                 **
+ 20                                                 **
+ 10 ##########################################################
+   0....5....1....1....2....2....3....3....4....4....5....5....
+             0    5    0    5    0    5    0    5    0    5
+               CPU% per minute (last 60 minutes)
+              * = maximum CPU%   # = average CPU%
+
+    2443226231335343233334232334224362332233313242242312733321223324232252
+    7501668008905630239085883717773870535905093003814483727689143319953805
+100
+ 90
+ 80                                                     *
+ 70       *                         *                   *
+ 60       *     *                   *                   *
+ 50  *    *     *        *     *    *                   *          *    *
+ 40  **   *   * ***   * ** * * *  *** *    *    *  *    * **       * *  *
+ 30 ******* * ****** ******* ******** ******* * * ** *  *****   ** *** ***
+ 20 **********************************************************************
+ 10 ######################################################################
+   0....5....1....1....2....2....3....3....4....4....5....5....6....6....7.
+             0    5    0    5    0    5    0    5    0    5    0    5    0
+                   CPU% per hour (last 72 hours)
+                  * = maximum CPU%   # = average CPU%
+****************************************
+show ip pim interface
+**----------------------------------------**
+                    ^
+% Invalid input detected at '^' marker.
+****************************************
+show ip pim neighbor
+**----------------------------------------**
+                    ^
+% Invalid input detected at '^' marker.
+****************************************
+show ntp associations
+**----------------------------------------**
+%NTP is not enabled.
+****************************************
+show ntp status
+**----------------------------------------**
+%NTP is not enabled.
+****************************************
+show environment
+**----------------------------------------**
+                   ^
+% Invalid input detected at '^' marker.
+****************************************
+show environment all
+**----------------------------------------**
+                   ^
+% Invalid input detected at '^' marker.
+****************************************
+show environment power
+**----------------------------------------**
+                   ^
+% Invalid input detected at '^' marker.
+****************************************
+show environment temperature
+**----------------------------------------**
+                   ^
+% Invalid input detected at '^' marker.
+****************************************
+show spanning-tree
+**----------------------------------------**
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    1
+             Address     346f.90b8.0980
+             Cost        7
+             Port        9 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     fcfb.fb5e.e100
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Root FWD 4         128.9    P2p Peer(STP)
+
+
+
+VLAN0010
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    10
+             Address     346f.90b8.0980
+             Cost        7
+             Port        9 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32778  (priority 32768 sys-id-ext 10)
+             Address     fcfb.fb5e.e100
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Root FWD 4         128.9    P2p Peer(STP)
+
+
+
+VLAN0015
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32783
+             Address     fcfb.fb5e.e100
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32783  (priority 32768 sys-id-ext 15)
+             Address     fcfb.fb5e.e100
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Desg FWD 4         128.9    P2p
+
+
+
+VLAN0099
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    99
+             Address     346f.90b8.0980
+             Cost        7
+             Port        9 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32867  (priority 32768 sys-id-ext 99)
+             Address     fcfb.fb5e.e100
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Root FWD 4         128.9    P2p Peer(STP)
+
+
+
+VLAN0100
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    100
+             Address     346f.90b8.0980
+             Cost        7
+             Port        9 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32868  (priority 32768 sys-id-ext 100)
+             Address     fcfb.fb5e.e100
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Root FWD 4         128.9    P2p Peer(STP)
+
+
+
+VLAN0101
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    101
+             Address     346f.90b8.0980
+             Cost        7
+             Port        9 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32869  (priority 32768 sys-id-ext 101)
+             Address     fcfb.fb5e.e100
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Root FWD 4         128.9    P2p Peer(STP)
+
+
+
+VLAN0102
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    102
+             Address     346f.90b8.0980
+             Cost        7
+             Port        9 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32870  (priority 32768 sys-id-ext 102)
+             Address     fcfb.fb5e.e100
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Root FWD 4         128.9    P2p Peer(STP)
+
+
+
+VLAN0103
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    103
+             Address     346f.90b8.0980
+             Cost        7
+             Port        9 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32871  (priority 32768 sys-id-ext 103)
+             Address     fcfb.fb5e.e100
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Root FWD 4         128.9    P2p Peer(STP)
+
+
+
+VLAN0104
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    104
+             Address     346f.90b8.0980
+             Cost        7
+             Port        9 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32872  (priority 32768 sys-id-ext 104)
+             Address     fcfb.fb5e.e100
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Root FWD 4         128.9    P2p Peer(STP)
+
+
+
+VLAN0105
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    105
+             Address     346f.90b8.0980
+             Cost        7
+             Port        9 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32873  (priority 32768 sys-id-ext 105)
+             Address     fcfb.fb5e.e100
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Root FWD 4         128.9    P2p Peer(STP)
+
+
+
+VLAN0106
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    106
+             Address     346f.90b8.0980
+             Cost        7
+             Port        9 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32874  (priority 32768 sys-id-ext 106)
+             Address     fcfb.fb5e.e100
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Root FWD 4         128.9    P2p Peer(STP)
+
+
+
+VLAN0600
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    33368
+             Address     fcfb.fb5e.e100
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33368  (priority 32768 sys-id-ext 600)
+             Address     fcfb.fb5e.e100
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Desg FWD 4         128.9    P2p
+
+
+
+VLAN0601
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    33369
+             Address     fcfb.fb5e.e100
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33369  (priority 32768 sys-id-ext 601)
+             Address     fcfb.fb5e.e100
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Desg FWD 4         128.9    P2p
+
+
+
+VLAN0666
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    666
+             Address     346f.90b8.0980
+             Cost        7
+             Port        9 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33434  (priority 32768 sys-id-ext 666)
+             Address     fcfb.fb5e.e100
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Root FWD 4         128.9    P2p Peer(STP)
+
+
+
+VLAN0700
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    700
+             Address     346f.90b8.0980
+             Cost        7
+             Port        9 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33468  (priority 32768 sys-id-ext 700)
+             Address     fcfb.fb5e.e100
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Root FWD 4         128.9    P2p Peer(STP)
+
+
+
+VLAN0705
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    705
+             Address     346f.90b8.0980
+             Cost        7
+             Port        9 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33473  (priority 32768 sys-id-ext 705)
+             Address     fcfb.fb5e.e100
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Root FWD 4         128.9    P2p Peer(STP)
+****************************************
+show spanning-tree detail
+**----------------------------------------**
+ VLAN0001 is executing the rstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 1, address fcfb.fb5e.e100
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  Current root has priority 1, address 346f.90b8.0980
+  Root port is 9 (GigabitEthernet0/1), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 39 last change occurred 3d13h ago
+          from GigabitEthernet0/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 9 (GigabitEthernet0/1) of VLAN0001 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.9.
+   Designated root has priority 1, address 346f.90b8.0980
+   Designated bridge has priority 32769, address b4a4.e379.3400
+   Designated port id is 128.25, designated path cost 3
+   Timers: message age 16, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default, Peer is STP
+   BPDU: sent 5, received 1843867
+
+
+ VLAN0010 is executing the rstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 10, address fcfb.fb5e.e100
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  Current root has priority 10, address 346f.90b8.0980
+  Root port is 9 (GigabitEthernet0/1), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 38 last change occurred 6d07h ago
+          from GigabitEthernet0/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 9 (GigabitEthernet0/1) of VLAN0010 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.9.
+   Designated root has priority 10, address 346f.90b8.0980
+   Designated bridge has priority 32778, address b4a4.e379.3400
+   Designated port id is 128.25, designated path cost 3
+   Timers: message age 16, forward delay 0, hold 0
+   Number of transitions to forwarding state: 2
+   Link type is point-to-point by default, Peer is STP
+   BPDU: sent 11, received 1843867
+
+
+ VLAN0015 is executing the rstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 15, address fcfb.fb5e.e100
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  We are the root of the spanning tree
+  Topology change flag not set, detected flag not set
+  Number of topology changes 1 last change occurred 6w0d ago
+          from GigabitEthernet0/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 9 (GigabitEthernet0/1) of VLAN0015 is designated forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.9.
+   Designated root has priority 32783, address fcfb.fb5e.e100
+   Designated bridge has priority 32783, address fcfb.fb5e.e100
+   Designated port id is 128.9, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 1837670, received 0
+
+
+ VLAN0099 is executing the rstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 99, address fcfb.fb5e.e100
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  Current root has priority 99, address 346f.90b8.0980
+  Root port is 9 (GigabitEthernet0/1), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 25 last change occurred 6d07h ago
+          from GigabitEthernet0/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 9 (GigabitEthernet0/1) of VLAN0099 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.9.
+   Designated root has priority 99, address 346f.90b8.0980
+   Designated bridge has priority 32867, address b4a4.e379.3400
+   Designated port id is 128.25, designated path cost 3
+   Timers: message age 16, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default, Peer is STP
+   BPDU: sent 5, received 1843858
+
+
+ VLAN0100 is executing the rstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 100, address fcfb.fb5e.e100
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  Current root has priority 100, address 346f.90b8.0980
+  Root port is 9 (GigabitEthernet0/1), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 25 last change occurred 6d07h ago
+          from GigabitEthernet0/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 9 (GigabitEthernet0/1) of VLAN0100 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.9.
+   Designated root has priority 100, address 346f.90b8.0980
+   Designated bridge has priority 32868, address b4a4.e379.3400
+   Designated port id is 128.25, designated path cost 3
+   Timers: message age 16, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default, Peer is STP
+   BPDU: sent 5, received 1843858
+
+
+ VLAN0101 is executing the rstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 101, address fcfb.fb5e.e100
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  Current root has priority 101, address 346f.90b8.0980
+  Root port is 9 (GigabitEthernet0/1), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 25 last change occurred 6d07h ago
+          from GigabitEthernet0/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 9 (GigabitEthernet0/1) of VLAN0101 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.9.
+   Designated root has priority 101, address 346f.90b8.0980
+   Designated bridge has priority 32869, address b4a4.e379.3400
+   Designated port id is 128.25, designated path cost 3
+   Timers: message age 15, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default, Peer is STP
+   BPDU: sent 4, received 1843858
+
+
+ VLAN0102 is executing the rstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 102, address fcfb.fb5e.e100
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  Current root has priority 102, address 346f.90b8.0980
+  Root port is 9 (GigabitEthernet0/1), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 25 last change occurred 6d07h ago
+          from GigabitEthernet0/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 9 (GigabitEthernet0/1) of VLAN0102 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.9.
+   Designated root has priority 102, address 346f.90b8.0980
+   Designated bridge has priority 32870, address b4a4.e379.3400
+   Designated port id is 128.25, designated path cost 3
+   Timers: message age 16, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default, Peer is STP
+   BPDU: sent 4, received 1843859
+
+
+ VLAN0103 is executing the rstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 103, address fcfb.fb5e.e100
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  Current root has priority 103, address 346f.90b8.0980
+  Root port is 9 (GigabitEthernet0/1), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 25 last change occurred 6d07h ago
+          from GigabitEthernet0/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 9 (GigabitEthernet0/1) of VLAN0103 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.9.
+   Designated root has priority 103, address 346f.90b8.0980
+   Designated bridge has priority 32871, address b4a4.e379.3400
+   Designated port id is 128.25, designated path cost 3
+   Timers: message age 15, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default, Peer is STP
+   BPDU: sent 5, received 1843856
+
+
+ VLAN0104 is executing the rstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 104, address fcfb.fb5e.e100
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  Current root has priority 104, address 346f.90b8.0980
+  Root port is 9 (GigabitEthernet0/1), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 25 last change occurred 6d07h ago
+          from GigabitEthernet0/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 9 (GigabitEthernet0/1) of VLAN0104 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.9.
+   Designated root has priority 104, address 346f.90b8.0980
+   Designated bridge has priority 32872, address b4a4.e379.3400
+   Designated port id is 128.25, designated path cost 3
+   Timers: message age 16, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default, Peer is STP
+   BPDU: sent 4, received 1843860
+
+
+ VLAN0105 is executing the rstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 105, address fcfb.fb5e.e100
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  Current root has priority 105, address 346f.90b8.0980
+  Root port is 9 (GigabitEthernet0/1), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 25 last change occurred 6d07h ago
+          from GigabitEthernet0/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 9 (GigabitEthernet0/1) of VLAN0105 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.9.
+   Designated root has priority 105, address 346f.90b8.0980
+   Designated bridge has priority 32873, address b4a4.e379.3400
+   Designated port id is 128.25, designated path cost 3
+   Timers: message age 16, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default, Peer is STP
+   BPDU: sent 4, received 1843858
+
+
+ VLAN0106 is executing the rstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 106, address fcfb.fb5e.e100
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  Current root has priority 106, address 346f.90b8.0980
+  Root port is 9 (GigabitEthernet0/1), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 33 last change occurred 6d07h ago
+          from GigabitEthernet0/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 9 (GigabitEthernet0/1) of VLAN0106 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.9.
+   Designated root has priority 106, address 346f.90b8.0980
+   Designated bridge has priority 32874, address b4a4.e379.3400
+   Designated port id is 128.25, designated path cost 3
+   Timers: message age 15, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default, Peer is STP
+   BPDU: sent 5, received 1843855
+
+
+ VLAN0600 is executing the rstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 600, address fcfb.fb5e.e100
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  We are the root of the spanning tree
+  Topology change flag not set, detected flag not set
+  Number of topology changes 1 last change occurred 6w0d ago
+          from GigabitEthernet0/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 9 (GigabitEthernet0/1) of VLAN0600 is designated forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.9.
+   Designated root has priority 33368, address fcfb.fb5e.e100
+   Designated bridge has priority 33368, address fcfb.fb5e.e100
+   Designated port id is 128.9, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 1837670, received 0
+
+
+ VLAN0601 is executing the rstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 601, address fcfb.fb5e.e100
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  We are the root of the spanning tree
+  Topology change flag not set, detected flag not set
+  Number of topology changes 1 last change occurred 6w0d ago
+          from GigabitEthernet0/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 9 (GigabitEthernet0/1) of VLAN0601 is designated forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.9.
+   Designated root has priority 33369, address fcfb.fb5e.e100
+   Designated bridge has priority 33369, address fcfb.fb5e.e100
+   Designated port id is 128.9, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 1837670, received 0
+
+
+ VLAN0666 is executing the rstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 666, address fcfb.fb5e.e100
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  Current root has priority 666, address 346f.90b8.0980
+  Root port is 9 (GigabitEthernet0/1), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 25 last change occurred 6d07h ago
+          from GigabitEthernet0/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 9 (GigabitEthernet0/1) of VLAN0666 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.9.
+   Designated root has priority 666, address 346f.90b8.0980
+   Designated bridge has priority 33434, address b4a4.e379.3400
+   Designated port id is 128.25, designated path cost 3
+   Timers: message age 16, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default, Peer is STP
+   BPDU: sent 4, received 1843858
+
+
+ VLAN0700 is executing the rstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 700, address fcfb.fb5e.e100
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  Current root has priority 700, address 346f.90b8.0980
+  Root port is 9 (GigabitEthernet0/1), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 25 last change occurred 6d07h ago
+          from GigabitEthernet0/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 9 (GigabitEthernet0/1) of VLAN0700 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.9.
+   Designated root has priority 700, address 346f.90b8.0980
+   Designated bridge has priority 33468, address b4a4.e379.3400
+   Designated port id is 128.25, designated path cost 3
+   Timers: message age 16, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default, Peer is STP
+   BPDU: sent 4, received 1843855
+
+
+ VLAN0705 is executing the rstp compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 705, address fcfb.fb5e.e100
+  Configured hello time 2, max age 20, forward delay 15, transmit hold-count 6
+  Current root has priority 705, address 346f.90b8.0980
+  Root port is 9 (GigabitEthernet0/1), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 36 last change occurred 6d07h ago
+          from GigabitEthernet0/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 9 (GigabitEthernet0/1) of VLAN0705 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.9.
+   Designated root has priority 705, address 346f.90b8.0980
+   Designated bridge has priority 33473, address b4a4.e379.3400
+   Designated port id is 128.25, designated path cost 3
+   Timers: message age 15, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default, Peer is STP
+   BPDU: sent 5, received 1843870
+****************************************
+show license all
+**----------------------------------------**
+                  ^
+% Invalid input detected at '^' marker.
+****************************************
+show stormcontroll
+**----------------------------------------**
+                     ^
+% Invalid input detected at '^' marker.
+****************************************

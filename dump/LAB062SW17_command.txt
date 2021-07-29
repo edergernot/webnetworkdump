@@ -1,0 +1,4206 @@
+
+****************************************
+show clock
+**----------------------------------------**
+*10:07:42.048 UTC Mon Apr 17 2006
+****************************************
+show version
+**----------------------------------------**
+Cisco IOS Software, C2960C Software (C2960c405ex-UNIVERSALK9-M), Version 15.2(2)E6, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2016 by Cisco Systems, Inc.
+Compiled Sat 17-Dec-16 00:55 by prod_rel_team
+
+ROM: Bootstrap program is C2960C boot loader
+BOOTLDR: C2960C Boot Loader (C2960C-HBOOT-M) Version 12.2(55r)EX11, RELEASE SOFTWARE (fc1)
+
+LAB062SW17 uptime is 15 weeks, 10 hours, 8 minutes
+System returned to ROM by power-on
+System image file is "flash:c2960c405ex-universalk9-mz.152-2.E6.bin"
+Last reload reason: power-on
+
+
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+License Level: lanbase
+License Type: Permanent
+Next reload license Level: lanbase
+
+cisco WS-C2960CG-8TC-L (PowerPC) processor (revision E0) with 131072K bytes of memory.
+Processor board ID FOC1819Y3S5
+Last reset from power-on
+3 Virtual Ethernet interfaces
+10 Gigabit Ethernet interfaces
+The password-recovery mechanism is enabled.
+
+512K bytes of flash-simulated non-volatile configuration memory.
+Base ethernet MAC Address       : 38:1C:1A:19:88:80
+Motherboard assembly number     : 73-13271-07
+Power supply part number        : 341-0208-02
+Motherboard serial number       : FOC18194LXK
+Power supply serial number      : LIT18090Y9V
+Model revision number           : E0
+Motherboard revision number     : A0
+Model number                    : WS-C2960CG-8TC-L
+System serial number            : FOC1819Y3S5
+Top Assembly Part Number        : 800-33673-03
+Top Assembly Revision Number    : B0
+Version ID                      : V03
+CLEI Code Number                : CMMDJ10ARC
+Hardware Board Revision Number  : 0x00
+
+
+Switch Ports Model                     SW Version            SW Image
+------ ----- -----                     ----------            ----------
+*    1 10    WS-C2960CG-8TC-L          15.2(2)E6             C2960c405ex-UNIVERSALK9-M
+
+
+Configuration register is 0xF
+****************************************
+show running
+**----------------------------------------**
+Building configuration...
+
+Current configuration : 6721 bytes
+!
+! Last configuration change at 02:09:14 UTC Tue Apr 11 2006 by kapsch
+!
+version 15.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname LAB062SW17
+!
+boot-start-marker
+boot-end-marker
+!
+no logging console
+!
+username kapsch privilege 15 secret 5 $1$5CgI$cTAxh7gxJUmf6hIYUkokL.
+aaa new-model
+!
+!
+aaa authentication login default local
+aaa authorization exec default local if-authenticated
+!
+!
+!
+!
+!
+!
+aaa session-id common
+!
+!
+ip domain-name kapsch-lab.net
+ip device tracking probe auto-source override
+ip device tracking probe delay 60
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-1465227904
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1465227904
+ revocation-check none
+ rsakeypair TP-self-signed-1465227904
+!
+crypto pki trustpoint DNAC-CA
+ enrollment mode ra
+ enrollment terminal
+ usage ssl-client
+ revocation-check crl none
+!
+!
+crypto pki certificate chain TP-self-signed-1465227904
+ certificate self-signed 01
+  30820251 308201BA A0030201 02020101 300D0609 2A864886 F70D0101 04050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 31343635 32323739 3034301E 170D3933 30333031 30303037
+  34335A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D31 34363532
+  32373930 3430819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281
+  8100EA8A 554ED72F 86B648AF E31777B7 CE3FC1AA DB715E64 D71AA0DE 329E0FF1
+  89D6D194 3E294171 1B725362 6AF1FAD5 57412EE6 94B5F87A 26860975 2ADB06C1
+  A1FA24FB 49E15A47 A75167B7 978293B0 CC4D1EF8 138827C3 88B54E32 9F56ADFE
+  7DB249C1 8DB1B850 15C37D81 271BF202 0E4CC9B1 7C98CD72 62E32AA4 3909892F
+  09830203 010001A3 79307730 0F060355 1D130101 FF040530 030101FF 30240603
+  551D1104 1D301B82 194C4142 30363253 5731372E 6B617073 63682D6C 61622E6E
+  6574301F 0603551D 23041830 16801471 42A19811 B7F1B030 7941E68E C7DCFB9F
+  206C6130 1D060355 1D0E0416 04147142 A19811B7 F1B03079 41E68EC7 DCFB9F20
+  6C61300D 06092A86 4886F70D 01010405 00038181 007FFEAA 90DD3D3F F9338915
+  29BCD8ED 3128F05A EB7D8BF5 39BE5A44 2646CF3E 571C30C3 3A858BC8 3214B184
+  9E17B7D3 4F1E61B3 612A1D10 BF532D6D B1A42A40 BED7DE53 4161CAAF D0A8D1F5
+  EEBD7B1B B11994EF 7DCDCC0E 0176E97D E49732A8 83937B4E F4A72983 35F6693A
+  A10FEFC1 3037265F E775C878 497ECDCE 4E7B4969 AB
+  	quit
+crypto pki certificate chain DNAC-CA
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel1
+ description TestPoc
+ switchport mode trunk
+!
+interface GigabitEthernet0/1
+ description Vlan 106
+ switchport access vlan 106
+ switchport mode trunk
+ spanning-tree portfast
+!
+interface GigabitEthernet0/2
+ description vlan 106
+ switchport access vlan 106
+ switchport mode access
+ ip device tracking maximum 10
+ spanning-tree portfast
+!
+interface GigabitEthernet0/3
+ description vlan 106
+ switchport access vlan 106
+ switchport mode access
+ ip device tracking maximum 10
+ spanning-tree portfast
+!
+interface GigabitEthernet0/4
+ description vlan 106
+ switchport access vlan 106
+ switchport mode access
+ ip device tracking maximum 10
+ spanning-tree portfast
+!
+interface GigabitEthernet0/5
+ description vlan 106
+ switchport access vlan 106
+ switchport mode access
+ ip device tracking maximum 10
+ spanning-tree portfast
+!
+interface GigabitEthernet0/6
+ description vlan 106
+ switchport access vlan 106
+ switchport mode access
+ ip device tracking maximum 10
+ spanning-tree portfast
+!
+interface GigabitEthernet0/7
+ description test
+ switchport mode trunk
+ shutdown
+ speed 100
+ channel-group 1 mode on
+!
+interface GigabitEthernet0/8
+ description Uplink
+ switchport mode trunk
+!
+interface GigabitEthernet0/9
+!
+interface GigabitEthernet0/10
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan10
+ description management
+ ip address 10.0.11.17 255.255.255.0
+!
+interface Vlan501
+ ip address 192.168.240.3 255.255.255.128
+!
+ip default-gateway 10.0.11.1
+ip http server
+ip http secure-server
+ip http client source-interface Vlan10
+!
+ip ssh source-interface Vlan10
+ip ssh version 2
+!
+ip access-list standard SNMP
+ permit 172.17.6.2
+ permit 10.0.11.0 0.0.0.255
+!
+logging source-interface Vlan10
+logging host 10.0.11.131
+!
+snmp-server community 260BAL RO SNMP
+snmp-server community 260LAB! RW SNMP
+snmp-server trap-source Vlan10
+snmp-server location LAB062:Buero:Eder
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps transceiver all
+snmp-server enable traps call-home message-send-fail server-fail
+snmp-server enable traps tty
+snmp-server enable traps license
+snmp-server enable traps auth-framework sec-violation
+snmp-server enable traps cluster
+snmp-server enable traps config-copy
+snmp-server enable traps config
+snmp-server enable traps config-ctid
+snmp-server enable traps trustsec-sxp conn-srcaddr-err msg-parse-err conn-config-err binding-err conn-up conn-down binding-expn-fail oper-nodeid-change binding-conflict
+snmp-server enable traps energywise
+snmp-server enable traps fru-ctrl
+snmp-server enable traps entity
+snmp-server enable traps event-manager
+snmp-server enable traps ike policy add
+snmp-server enable traps ike policy delete
+snmp-server enable traps ike tunnel start
+snmp-server enable traps ike tunnel stop
+snmp-server enable traps ipsec cryptomap add
+snmp-server enable traps ipsec cryptomap delete
+snmp-server enable traps ipsec cryptomap attach
+snmp-server enable traps ipsec cryptomap detach
+snmp-server enable traps ipsec tunnel start
+snmp-server enable traps ipsec tunnel stop
+snmp-server enable traps ipsec too-many-sas
+snmp-server enable traps power-ethernet police
+snmp-server enable traps cpu threshold
+snmp-server enable traps rep
+snmp-server enable traps vstack
+snmp-server enable traps bridge newroot topologychange
+snmp-server enable traps stpx inconsistency root-inconsistency loop-inconsistency
+snmp-server enable traps syslog
+snmp-server enable traps vtp
+snmp-server enable traps vlancreate
+snmp-server enable traps vlandelete
+snmp-server enable traps flash insertion removal
+snmp-server enable traps port-security
+snmp-server enable traps envmon fan shutdown supply temperature status
+snmp-server enable traps stackwise
+snmp-server enable traps bulkstat collection transfer
+snmp-server enable traps errdisable
+snmp-server enable traps mac-notification change move threshold
+snmp-server enable traps vlan-membership
+snmp-server host 10.0.11.131 version 2c 260LAB!
+snmp-server host 10.189.252.12 version 2c public
+!
+!
+!
+!
+line con 0
+line vty 0 4
+ transport input telnet ssh
+line vty 5 15
+!
+pnp startup-vlan 106
+end
+****************************************
+show inventory
+**----------------------------------------**
+NAME: "1", DESCR: "WS-C2960CG-8TC-L"
+PID: WS-C2960CG-8TC-L  , VID: V03  , SN: FOC1819Y3S5
+****************************************
+show cdp neighbors detail
+**----------------------------------------**
+-------------------------
+Device ID: LAB062SW15.kapsch-lab.net
+Entry address(es):
+  IP address: 10.0.11.15
+Platform: cisco WS-C2960S-48TD-L,  Capabilities: Switch IGMP
+Interface: GigabitEthernet0/8,  Port ID (outgoing port): GigabitEthernet1/0/7
+Holdtime : 157 sec
+
+Version :
+Cisco IOS Software, C2960S Software (C2960S-UNIVERSALK9-M), Version 12.2(55)SE5, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2012 by Cisco Systems, Inc.
+Compiled Thu 09-Feb-12 19:22 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF010221FF000000000000B4A4E3793400FF0000
+VTP Management Domain: 'LAB062'
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.0.11.15
+
+
+Total cdp entries displayed : 1
+****************************************
+show ip interface brief
+**----------------------------------------**
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  unassigned      YES NVRAM  administratively down down
+Vlan10                 10.0.11.17      YES NVRAM  up                    up
+Vlan501                192.168.240.3   YES manual up                    up
+GigabitEthernet0/1     unassigned      YES unset  down                  down
+GigabitEthernet0/2     unassigned      YES unset  down                  down
+GigabitEthernet0/3     unassigned      YES unset  up                    up
+GigabitEthernet0/4     unassigned      YES unset  down                  down
+GigabitEthernet0/5     unassigned      YES unset  down                  down
+GigabitEthernet0/6     unassigned      YES unset  down                  down
+GigabitEthernet0/7     unassigned      YES unset  administratively down down
+GigabitEthernet0/8     unassigned      YES unset  up                    up
+GigabitEthernet0/9     unassigned      YES unset  down                  down
+GigabitEthernet0/10    unassigned      YES unset  down                  down
+Port-channel1          unassigned      YES unset  down                  down
+****************************************
+show interfaces
+**----------------------------------------**
+Vlan1 is administratively down, line protocol is down
+  Hardware is EtherSVI, address is 381c.1a19.88c0 (bia 381c.1a19.88c0)
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive not supported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:01:12, output never, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     294999 packets input, 103272264 bytes, 0 no buffer
+     Received 0 broadcasts (0 IP multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 packets output, 0 bytes, 0 underruns
+     0 output errors, 1 interface resets
+     0 unknown protocol drops
+     0 output buffer failures, 0 output buffers swapped out
+Vlan10 is up, line protocol is up
+  Hardware is EtherSVI, address is 381c.1a19.88c1 (bia 381c.1a19.88c1)
+  Description: management
+  Internet address is 10.0.11.17/24
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive not supported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:00:00, output 00:00:00, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 2000 bits/sec, 4 packets/sec
+  5 minute output rate 1000 bits/sec, 1 packets/sec
+     38159901 packets input, 2886914627 bytes, 0 no buffer
+     Received 0 broadcasts (0 IP multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     1989848 packets output, 664290297 bytes, 0 underruns
+     0 output errors, 2 interface resets
+     32228 unknown protocol drops
+     0 output buffer failures, 0 output buffers swapped out
+Vlan501 is up, line protocol is up
+  Hardware is EtherSVI, address is 381c.1a19.88c2 (bia 381c.1a19.88c2)
+  Internet address is 192.168.240.3/25
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive not supported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 11w0d, output 00:07:42, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     416570 packets input, 32732014 bytes, 0 no buffer
+     Received 0 broadcasts (0 IP multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     48503 packets output, 3132963 bytes, 0 underruns
+     0 output errors, 1 interface resets
+     0 unknown protocol drops
+     0 output buffer failures, 0 output buffers swapped out
+GigabitEthernet0/1 is down, line protocol is down (notconnect)
+  Hardware is Gigabit Ethernet, address is 381c.1a19.8881 (bia 381c.1a19.8881)
+  Description: Vlan 106
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Auto-duplex, Auto-speed, media type is 10/100/1000BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input never, output 6d08h, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     728 packets input, 78152 bytes, 0 no buffer
+     Received 728 broadcasts (478 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 478 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     18114 packets output, 1523409 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 pause output
+     0 output buffer failures, 0 output buffers swapped out
+GigabitEthernet0/2 is down, line protocol is down (notconnect)
+  Hardware is Gigabit Ethernet, address is 381c.1a19.8882 (bia 381c.1a19.8882)
+  Description: vlan 106
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Auto-duplex, Auto-speed, media type is 10/100/1000BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input never, output 6d03h, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     7454566 packets input, 2404435019 bytes, 0 no buffer
+     Received 132291 broadcasts (106379 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 106379 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     12862338 packets output, 8301246150 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 pause output
+     0 output buffer failures, 0 output buffers swapped out
+GigabitEthernet0/3 is up, line protocol is up (connected)
+  Hardware is Gigabit Ethernet, address is 381c.1a19.8883 (bia 381c.1a19.8883)
+  Description: vlan 106
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Full-duplex, 1000Mb/s, media type is 10/100/1000BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 1w3d, output 00:00:00, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     69084787 packets input, 16749280583 bytes, 0 no buffer
+     Received 2095819 broadcasts (894140 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 894140 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     56984408 packets output, 21465684240 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 pause output
+     0 output buffer failures, 0 output buffers swapped out
+GigabitEthernet0/4 is down, line protocol is down (notconnect)
+  Hardware is Gigabit Ethernet, address is 381c.1a19.8884 (bia 381c.1a19.8884)
+  Description: vlan 106
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Auto-duplex, Auto-speed, media type is 10/100/1000BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 14w4d, output 11w0d, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     992401 packets input, 201488923 bytes, 0 no buffer
+     Received 30396 broadcasts (28621 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 28621 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     2415676 packets output, 422777598 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 pause output
+     0 output buffer failures, 0 output buffers swapped out
+GigabitEthernet0/5 is down, line protocol is down (notconnect)
+  Hardware is Gigabit Ethernet, address is 381c.1a19.8885 (bia 381c.1a19.8885)
+  Description: vlan 106
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Auto-duplex, Auto-speed, media type is 10/100/1000BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 3w6d, output 6d07h, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 5195
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     2324274 packets input, 962291969 bytes, 0 no buffer
+     Received 40067 broadcasts (33665 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 33665 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     2847422 packets output, 1786656911 bytes, 0 underruns
+     0 output errors, 0 collisions, 4 interface resets
+     9 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 pause output
+     0 output buffer failures, 0 output buffers swapped out
+GigabitEthernet0/6 is down, line protocol is down (notconnect)
+  Hardware is Gigabit Ethernet, address is 381c.1a19.8886 (bia 381c.1a19.8886)
+  Description: vlan 106
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Auto-duplex, Auto-speed, media type is 10/100/1000BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 14w0d, output 2w0d, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     602287 packets input, 154037558 bytes, 0 no buffer
+     Received 141521 broadcasts (131532 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 131532 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     1590682 packets output, 952055073 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 pause output
+     0 output buffer failures, 0 output buffers swapped out
+GigabitEthernet0/7 is administratively down, line protocol is down (disabled)
+  Hardware is Gigabit Ethernet, address is 381c.1a19.8887 (bia 381c.1a19.8887)
+  Description: test
+  MTU 1500 bytes, BW 100000 Kbit/sec, DLY 100 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Auto-duplex, 100Mb/s, media type is 10/100/1000BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 3w6d, output 3w6d, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     673632 packets input, 477715876 bytes, 0 no buffer
+     Received 163373 broadcasts (161303 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 161303 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     1287523 packets output, 142326829 bytes, 0 underruns
+     0 output errors, 0 collisions, 8 interface resets
+     6 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 pause output
+     0 output buffer failures, 0 output buffers swapped out
+GigabitEthernet0/8 is up, line protocol is up (connected)
+  Hardware is Gigabit Ethernet, address is 381c.1a19.8888 (bia 381c.1a19.8888)
+  Description: Uplink
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Full-duplex, 1000Mb/s, media type is 10/100/1000BaseTX
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:00:00, output 00:00:00, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 2/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 36000 bits/sec, 57 packets/sec
+  5 minute output rate 3000 bits/sec, 3 packets/sec
+     646682627 packets input, 80752040685 bytes, 0 no buffer
+     Received 571157792 broadcasts (450291677 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 450291677 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     83592090 packets output, 21806076130 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 pause output
+     0 output buffer failures, 0 output buffers swapped out
+GigabitEthernet0/9 is down, line protocol is down (notconnect)
+  Hardware is Gigabit Ethernet, address is 381c.1a19.8889 (bia 381c.1a19.8889)
+  MTU 1500 bytes, BW 10000 Kbit/sec, DLY 1000 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive not set
+  Auto-duplex, Auto-speed, link type is auto, media type is Not Present
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input never, output never, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     0 packets input, 0 bytes, 0 no buffer
+     Received 0 broadcasts (0 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 0 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     0 packets output, 0 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 pause output
+     0 output buffer failures, 0 output buffers swapped out
+GigabitEthernet0/10 is down, line protocol is down (notconnect)
+  Hardware is Gigabit Ethernet, address is 381c.1a19.888a (bia 381c.1a19.888a)
+  MTU 1500 bytes, BW 10000 Kbit/sec, DLY 1000 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive not set
+  Auto-duplex, Auto-speed, link type is auto, media type is Not Present
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input never, output never, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     0 packets input, 0 bytes, 0 no buffer
+     Received 0 broadcasts (0 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 0 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     0 packets output, 0 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 pause output
+     0 output buffer failures, 0 output buffers swapped out
+Port-channel1 is down, line protocol is down (notconnect)
+  Hardware is EtherChannel, address is 381c.1a19.8885 (bia 381c.1a19.8885)
+  Description: TestPoc
+  MTU 1500 bytes, BW 100000 Kbit/sec, DLY 100 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Auto-duplex, Auto-speed, link type is auto, media type is unknown
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 3w6d, output 3w6d, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 5195
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     743881 packets input, 814471503 bytes, 0 no buffer
+     Received 8109 broadcasts (7406 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 7406 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     795837 packets output, 640993443 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 pause output
+     0 output buffer failures, 0 output buffers swapped out
+****************************************
+show interface trunk
+**----------------------------------------**
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/8       on               802.1q         trunking      1
+
+Port        Vlans allowed on trunk
+Gi0/8       1-4094
+
+Port        Vlans allowed and active in management domain
+Gi0/8       1,10,20-23,97,99-123,200-223,308-309,500-503,666,700,705-706,800-801,900-901,1001
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gi0/8       1,10,20-23,97,99-123,200-223,308-309,500-503,666,700,705-706,800-801,900-901,1001
+****************************************
+show interfaces status
+**----------------------------------------**
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi0/1     Vlan 106           notconnect   106          auto   auto 10/100/1000BaseTX
+Gi0/2     vlan 106           notconnect   106          auto   auto 10/100/1000BaseTX
+Gi0/3     vlan 106           connected    106        a-full a-1000 10/100/1000BaseTX
+Gi0/4     vlan 106           notconnect   106          auto   auto 10/100/1000BaseTX
+Gi0/5     vlan 106           notconnect   106          auto   auto 10/100/1000BaseTX
+Gi0/6     vlan 106           notconnect   106          auto   auto 10/100/1000BaseTX
+Gi0/7     test               disabled     1            auto    100 10/100/1000BaseTX
+Gi0/8     Uplink             connected    trunk      a-full a-1000 10/100/1000BaseTX
+Gi0/9                        notconnect   1            auto   auto Not Present
+Gi0/10                       notconnect   1            auto   auto Not Present
+Po1       TestPoc            notconnect   1            auto   auto
+****************************************
+show etherchannel summary
+**----------------------------------------**
+Flags:  D - down        P - bundled in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+
+        M - not in use, minimum links not met
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 1
+Number of aggregators:           1
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+1      Po1(SD)          -        Gi0/7(D)
+****************************************
+show mac address-table
+**----------------------------------------**
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+ All    0100.0ccc.cccc    STATIC      CPU
+ All    0100.0ccc.cccd    STATIC      CPU
+ All    0180.c200.0000    STATIC      CPU
+ All    0180.c200.0001    STATIC      CPU
+ All    0180.c200.0002    STATIC      CPU
+ All    0180.c200.0003    STATIC      CPU
+ All    0180.c200.0004    STATIC      CPU
+ All    0180.c200.0005    STATIC      CPU
+ All    0180.c200.0006    STATIC      CPU
+ All    0180.c200.0007    STATIC      CPU
+ All    0180.c200.0008    STATIC      CPU
+ All    0180.c200.0009    STATIC      CPU
+ All    0180.c200.000a    STATIC      CPU
+ All    0180.c200.000b    STATIC      CPU
+ All    0180.c200.000c    STATIC      CPU
+ All    0180.c200.000d    STATIC      CPU
+ All    0180.c200.000e    STATIC      CPU
+ All    0180.c200.000f    STATIC      CPU
+ All    0180.c200.0010    STATIC      CPU
+ All    ffff.ffff.ffff    STATIC      CPU
+ 106    346f.90b8.09cd    DYNAMIC     Gi0/8
+ 106    687d.b4dd.acfc    DYNAMIC     Gi0/8
+ 106    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 106    d0d3.e0c9.1e0e    DYNAMIC     Gi0/3
+   1    9077.eeec.a751    DYNAMIC     Gi0/8
+   1    b4a4.e379.3407    DYNAMIC     Gi0/8
+  10    000c.297a.d43b    DYNAMIC     Gi0/8
+  10    002a.6ab3.5ba1    DYNAMIC     Gi0/8
+  10    0050.56b2.14dd    DYNAMIC     Gi0/8
+  10    0050.56b2.88b4    DYNAMIC     Gi0/8
+  10    0050.56b2.d028    DYNAMIC     Gi0/8
+  10    08f1.eaeb.75ae    DYNAMIC     Gi0/8
+  10    08f1.eaeb.7bde    DYNAMIC     Gi0/8
+  10    245e.be39.e278    DYNAMIC     Gi0/8
+  10    24a9.3706.6dd0    DYNAMIC     Gi0/8
+  10    24a9.3706.a8a3    DYNAMIC     Gi0/8
+  10    28ac.9e41.ed35    DYNAMIC     Gi0/8
+  10    346f.90b8.09c6    DYNAMIC     Gi0/8
+  10    3863.bb32.2dfe    DYNAMIC     Gi0/8
+  10    3863.bb32.32ca    DYNAMIC     Gi0/8
+  10    3863.bb32.6414    DYNAMIC     Gi0/8
+  10    3863.bb32.ac84    DYNAMIC     Gi0/8
+  10    547f.eeff.72e1    DYNAMIC     Gi0/8
+  10    8e61.fe60.1db7    DYNAMIC     Gi0/8
+  10    b4a4.e379.3407    DYNAMIC     Gi0/8
+  10    ecb1.d781.d682    DYNAMIC     Gi0/8
+  20    b4a4.e379.3407    DYNAMIC     Gi0/8
+  21    b4a4.e379.3407    DYNAMIC     Gi0/8
+  22    b4a4.e379.3407    DYNAMIC     Gi0/8
+  23    0050.569f.b52d    DYNAMIC     Gi0/8
+  23    009c.0279.7e38    DYNAMIC     Gi0/8
+  23    1060.4ba3.173f    DYNAMIC     Gi0/8
+  23    1060.4ba3.24cd    DYNAMIC     Gi0/8
+  23    1060.4ba3.943f    DYNAMIC     Gi0/8
+  23    1060.4ba3.9447    DYNAMIC     Gi0/8
+  23    346f.90b8.09c4    DYNAMIC     Gi0/8
+  23    6c3b.e5a1.0cd9    DYNAMIC     Gi0/8
+  23    6c3b.e5a1.8f80    DYNAMIC     Gi0/8
+  23    6c3b.e5a1.bf22    DYNAMIC     Gi0/8
+  23    6c3b.e5a1.bf2d    DYNAMIC     Gi0/8
+  23    6c3b.e5a1.bf64    DYNAMIC     Gi0/8
+  23    6c3b.e5a1.bf68    DYNAMIC     Gi0/8
+  23    6c3b.e5a1.bfa1    DYNAMIC     Gi0/8
+  23    6c3b.e5a1.ec59    DYNAMIC     Gi0/8
+  23    6c3b.e5a1.ec97    DYNAMIC     Gi0/8
+  23    6c3b.e5a2.0506    DYNAMIC     Gi0/8
+  23    6c3b.e5a2.149a    DYNAMIC     Gi0/8
+  23    6c3b.e5a2.a340    DYNAMIC     Gi0/8
+  23    6c3b.e5a2.f463    DYNAMIC     Gi0/8
+  23    6c3b.e5a2.f4b2    DYNAMIC     Gi0/8
+  23    b499.ba28.1acc    DYNAMIC     Gi0/8
+  23    b499.ba28.e980    DYNAMIC     Gi0/8
+  23    b4a4.e379.3407    DYNAMIC     Gi0/8
+  23    d89d.6762.7dc8    DYNAMIC     Gi0/8
+  23    d89d.6762.8b78    DYNAMIC     Gi0/8
+  23    d89d.6762.d910    DYNAMIC     Gi0/8
+  23    d89d.6762.d914    DYNAMIC     Gi0/8
+  23    d89d.6762.e948    DYNAMIC     Gi0/8
+  23    fc15.b40d.6c05    DYNAMIC     Gi0/8
+  23    fc15.b419.0873    DYNAMIC     Gi0/8
+  97    b4a4.e379.3407    DYNAMIC     Gi0/8
+  99    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 100    0200.ac11.0004    DYNAMIC     Gi0/8
+ 100    0200.ac11.0005    DYNAMIC     Gi0/8
+ 100    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 101    566f.8315.0001    DYNAMIC     Gi0/8
+ 101    566f.8315.0005    DYNAMIC     Gi0/8
+ 101    566f.8315.0007    DYNAMIC     Gi0/8
+ 101    566f.8315.0008    DYNAMIC     Gi0/8
+ 101    566f.8315.0009    DYNAMIC     Gi0/8
+ 101    566f.8315.000a    DYNAMIC     Gi0/8
+ 101    566f.8315.000b    DYNAMIC     Gi0/8
+ 101    566f.8315.000c    DYNAMIC     Gi0/8
+ 101    566f.8315.0017    DYNAMIC     Gi0/8
+ 101    566f.8315.001c    DYNAMIC     Gi0/8
+ 101    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 102    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 103    0200.15a9.d7a5    DYNAMIC     Gi0/8
+ 103    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 104    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 105    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 107    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 108    346f.90b8.09e1    DYNAMIC     Gi0/8
+ 108    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 109    0008.5d79.32fe    DYNAMIC     Gi0/8
+ 109    0008.5d79.60e7    DYNAMIC     Gi0/8
+ 109    000c.2961.45c3    DYNAMIC     Gi0/8
+ 109    000c.2976.e763    DYNAMIC     Gi0/8
+ 109    0050.56b2.aa49    DYNAMIC     Gi0/8
+ 109    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 110    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 111    0050.56b2.7c49    DYNAMIC     Gi0/8
+ 111    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 112    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 113    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 114    0200.f31c.1f09    DYNAMIC     Gi0/8
+ 114    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 115    0030.1e3f.5f8a    DYNAMIC     Gi0/8
+ 115    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 116    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 117    0086.9c6b.9a13    DYNAMIC     Gi0/8
+ 117    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 118    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 119    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 120    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 121    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 122    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 123    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 200    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 201    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 202    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 203    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 204    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 205    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 206    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 207    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 208    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 209    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 210    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 211    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 212    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 213    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 214    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 215    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 216    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 217    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 218    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 219    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 220    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 221    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 222    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 223    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 500    5c5a.c729.235c    DYNAMIC     Gi0/8
+ 500    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 666    105a.f77a.628f    DYNAMIC     Gi0/8
+ 666    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 700    0086.9c6b.9a00    DYNAMIC     Gi0/8
+ 700    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 705    000c.29a9.852d    DYNAMIC     Gi0/8
+ 705    0086.9c6b.9a12    DYNAMIC     Gi0/8
+ 705    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 705    f092.1c10.3088    DYNAMIC     Gi0/8
+ 706    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 800    40a8.f066.3a28    DYNAMIC     Gi0/8
+ 800    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 801    30ae.a4f5.870c    DYNAMIC     Gi0/8
+ 801    30ae.a4f6.0a28    DYNAMIC     Gi0/8
+ 801    30ae.a4f6.0bec    DYNAMIC     Gi0/8
+ 801    346f.90b8.09fe    DYNAMIC     Gi0/8
+ 801    5897.bdb4.f900    DYNAMIC     Gi0/8
+ 801    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 900    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 901    b4a4.e379.3407    DYNAMIC     Gi0/8
+1001    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 501    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 502    0050.56b2.6454    DYNAMIC     Gi0/8
+ 502    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 308    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 309    b4a4.e379.3407    DYNAMIC     Gi0/8
+ 503    b4a4.e379.3407    DYNAMIC     Gi0/8
+Total Mac Addresses for this criterion: 180
+****************************************
+show ip route
+**----------------------------------------**
+                    ^
+% Invalid input detected at '^' marker.
+****************************************
+show arp
+**----------------------------------------**
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.0.11.1               2   346f.90b8.09c6  ARPA   Vlan10
+Internet  10.0.11.17              -   381c.1a19.88c1  ARPA   Vlan10
+Internet  10.0.11.32             16   5254.003f.ef3c  ARPA   Vlan10
+Internet  10.0.11.64              7   000c.297a.d43b  ARPA   Vlan10
+Internet  10.0.11.65              7   0050.56b2.7cfa  ARPA   Vlan10
+Internet  10.0.11.130             0   28ac.9e41.ed35  ARPA   Vlan10
+Internet  10.0.11.131             0   28ac.9e41.ed35  ARPA   Vlan10
+Internet  172.17.6.2             35   346f.90b8.09c6  ARPA   Vlan10
+Internet  192.168.240.3           -   381c.1a19.88c2  ARPA   Vlan501
+****************************************
+show access-lists
+**----------------------------------------**
+Standard IP access list SNMP
+    10 permit 172.17.6.2 (700968 matches)
+    20 permit 10.0.11.0, wildcard bits 0.0.0.255 (2360800 matches)
+Extended IP access list CISCO-CWA-URL-REDIRECT-ACL
+    100 deny udp any any eq domain
+    101 deny tcp any any eq domain
+    102 deny udp any eq bootps any
+    103 deny udp any any eq bootpc
+    104 deny udp any eq bootpc any
+    105 permit tcp any any eq www
+Extended IP access list preauth_ipv4_acl (per-user)
+    10 permit udp any any eq domain
+    20 permit tcp any any eq domain
+    30 permit udp any eq bootps any
+    40 permit udp any any eq bootpc
+    50 permit udp any eq bootpc any
+    60 deny ip any any
+IPv6 access list preauth_ipv6_acl (per-user)
+    permit udp any any eq domain sequence 10
+    permit tcp any any eq domain sequence 20
+    permit icmp any any nd-ns sequence 30
+    permit icmp any any nd-na sequence 40
+    permit icmp any any router-solicitation sequence 50
+    permit icmp any any router-advertisement sequence 60
+    permit icmp any any redirect sequence 70
+    permit udp any eq 547 any eq 546 sequence 80
+    permit udp any eq 546 any eq 547 sequence 90
+    deny ipv6 any any sequence 100
+****************************************
+show ip arp
+**----------------------------------------**
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.0.11.1               2   346f.90b8.09c6  ARPA   Vlan10
+Internet  10.0.11.17              -   381c.1a19.88c1  ARPA   Vlan10
+Internet  10.0.11.32             16   5254.003f.ef3c  ARPA   Vlan10
+Internet  10.0.11.64              7   000c.297a.d43b  ARPA   Vlan10
+Internet  10.0.11.65              7   0050.56b2.7cfa  ARPA   Vlan10
+Internet  10.0.11.130             0   28ac.9e41.ed35  ARPA   Vlan10
+Internet  10.0.11.131             0   28ac.9e41.ed35  ARPA   Vlan10
+Internet  172.17.6.2             35   346f.90b8.09c6  ARPA   Vlan10
+Internet  192.168.240.3           -   381c.1a19.88c2  ARPA   Vlan501
+****************************************
+show ip protocols
+**----------------------------------------**
+                    ^
+% Invalid input detected at '^' marker.
+****************************************
+show ip route
+**----------------------------------------**
+                    ^
+% Invalid input detected at '^' marker.
+****************************************
+show ipv6 route
+**----------------------------------------**
+
+****************************************
+show ipv6 neighborsshow ip mroute
+**----------------------------------------**
+                              ^
+% Invalid input detected at '^' marker.
+****************************************
+show power inline
+**----------------------------------------**
+Available:0.0(w)  Used:0.0(w)  Remaining:0.0(w)
+
+Interface Admin  Oper       Power   Device              Class Max
+                            (Watts)
+--------- ------ ---------- ------- ------------------- ----- ----
+****************************************
+show standby all
+**----------------------------------------**
+
+****************************************
+show ip vrf
+**----------------------------------------**
+                    ^
+% Invalid input detected at '^' marker.
+****************************************
+show lldp
+**----------------------------------------**
+% LLDP is not enabled
+****************************************
+show lldp neighbors detail
+**----------------------------------------**
+% LLDP is not enabled
+****************************************
+show processes cpu history
+**----------------------------------------**
+      444455555     11111               11111                    3
+      333355555666660000077777666667777766666999997777777777666663
+  100
+   90
+   80
+   70
+   60     *****
+   50     *****
+   40 *********
+   30 *********
+   20 *********                         *****
+   10 **********************************************************
+     0....5....1....1....2....2....3....3....4....4....5....5....6
+               0    5    0    5    0    5    0    5    0    5    0
+               CPU% per second (last 60 seconds)
+
+
+
+
+      333121111211111188111111111211111111771111112111111111117711
+      300616666566665611367776638487636367887969944577766666467777
+  100
+   90
+   80                 **                  **                  **
+   70                 **                  **                  **
+   60                 **                  **                  **
+   50                 **                  **                  **
+   40                 **                  **                  **
+   30 ***      *      **                  **                  **
+   20 ****************** ****** ***** * ********* ********** ***
+   10 ##########################################################
+     0....5....1....1....2....2....3....3....4....4....5....5....6
+               0    5    0    5    0    5    0    5    0    5    0
+               CPU% per minute (last 60 minutes)
+              * = maximum CPU%   # = average CPU%
+
+
+
+
+      887877666554577778888898888877666655666679777888888887777665555655677888
+      118561623888206495926904976348952494037820548457252757322848713249427046
+  100
+   90    *             ** *** ***              *    ** * **
+   80 *****         * ************ *           ** **********              **
+   70 *******      *******************      ********************         ***
+   60 ***********  ********************** *************************  * *****
+   50 **********************************************************************
+   40 **********************************************************************
+   30 **********************************************************************
+   20 **********************************************************************
+   10 ######################################################################
+     0....5....1....1....2....2....3....3....4....4....5....5....6....6....7..
+               0    5    0    5    0    5    0    5    0    5    0    5    0
+                   CPU% per hour (last 72 hours)
+                  * = maximum CPU%   # = average CPU%
+****************************************
+show ip pim interface
+**----------------------------------------**
+                    ^
+% Invalid input detected at '^' marker.
+****************************************
+show ip pim neighbor
+**----------------------------------------**
+                    ^
+% Invalid input detected at '^' marker.
+****************************************
+show ntp associations
+**----------------------------------------**
+
+****************************************
+show ntp status
+**----------------------------------------**
+%NTP is not enabled.
+****************************************
+show environment
+**----------------------------------------**
+                   ^
+% Invalid input detected at '^' marker.
+****************************************
+show environment all
+**----------------------------------------**
+                   ^
+% Invalid input detected at '^' marker.
+****************************************
+show environment power
+**----------------------------------------**
+                   ^
+% Invalid input detected at '^' marker.
+****************************************
+show environment temperature
+**----------------------------------------**
+                   ^
+% Invalid input detected at '^' marker.
+****************************************
+show spanning-tree
+**----------------------------------------**
+VLAN0001
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    1
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0010
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    10
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32778  (priority 32768 sys-id-ext 10)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0020
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    20
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32788  (priority 32768 sys-id-ext 20)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0021
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    21
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32789  (priority 32768 sys-id-ext 21)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0022
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    22
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32790  (priority 32768 sys-id-ext 22)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0023
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    23
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32791  (priority 32768 sys-id-ext 23)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0097
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    97
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32865  (priority 32768 sys-id-ext 97)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0099
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    99
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32867  (priority 32768 sys-id-ext 99)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0100
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    100
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32868  (priority 32768 sys-id-ext 100)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0101
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    101
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32869  (priority 32768 sys-id-ext 101)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0102
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    102
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32870  (priority 32768 sys-id-ext 102)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0103
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    103
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32871  (priority 32768 sys-id-ext 103)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0104
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    104
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32872  (priority 32768 sys-id-ext 104)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0105
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    105
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32873  (priority 32768 sys-id-ext 105)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0106
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    106
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32874  (priority 32768 sys-id-ext 106)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/3               Desg FWD 4         128.3    P2p Edge
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0107
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    107
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32875  (priority 32768 sys-id-ext 107)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0108
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    108
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32876  (priority 32768 sys-id-ext 108)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0109
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    109
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32877  (priority 32768 sys-id-ext 109)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0110
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    110
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32878  (priority 32768 sys-id-ext 110)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0111
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    111
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32879  (priority 32768 sys-id-ext 111)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0112
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    112
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32880  (priority 32768 sys-id-ext 112)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0113
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    113
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32881  (priority 32768 sys-id-ext 113)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0114
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    114
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32882  (priority 32768 sys-id-ext 114)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0115
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    115
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32883  (priority 32768 sys-id-ext 115)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0116
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    116
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32884  (priority 32768 sys-id-ext 116)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0117
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    117
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32885  (priority 32768 sys-id-ext 117)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0118
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    118
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32886  (priority 32768 sys-id-ext 118)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0119
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    119
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32887  (priority 32768 sys-id-ext 119)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0120
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    120
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32888  (priority 32768 sys-id-ext 120)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0121
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    121
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32889  (priority 32768 sys-id-ext 121)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0122
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    122
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32890  (priority 32768 sys-id-ext 122)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0123
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    123
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32891  (priority 32768 sys-id-ext 123)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0200
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    200
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32968  (priority 32768 sys-id-ext 200)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0201
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    201
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32969  (priority 32768 sys-id-ext 201)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0202
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    202
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32970  (priority 32768 sys-id-ext 202)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0203
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    203
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32971  (priority 32768 sys-id-ext 203)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0204
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    204
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32972  (priority 32768 sys-id-ext 204)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0205
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    205
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32973  (priority 32768 sys-id-ext 205)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0206
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    206
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32974  (priority 32768 sys-id-ext 206)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0207
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    207
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32975  (priority 32768 sys-id-ext 207)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0208
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    208
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32976  (priority 32768 sys-id-ext 208)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0209
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    209
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32977  (priority 32768 sys-id-ext 209)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0210
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    210
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32978  (priority 32768 sys-id-ext 210)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0211
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    211
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32979  (priority 32768 sys-id-ext 211)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0212
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    212
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32980  (priority 32768 sys-id-ext 212)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0213
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    213
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32981  (priority 32768 sys-id-ext 213)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0214
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    214
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32982  (priority 32768 sys-id-ext 214)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0215
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    215
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32983  (priority 32768 sys-id-ext 215)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0216
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    216
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32984  (priority 32768 sys-id-ext 216)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0217
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    217
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32985  (priority 32768 sys-id-ext 217)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0218
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    218
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32986  (priority 32768 sys-id-ext 218)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0219
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    219
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32987  (priority 32768 sys-id-ext 219)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0220
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    220
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32988  (priority 32768 sys-id-ext 220)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0221
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    221
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32989  (priority 32768 sys-id-ext 221)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0222
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    222
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32990  (priority 32768 sys-id-ext 222)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0223
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    223
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32991  (priority 32768 sys-id-ext 223)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0308
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    308
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33076  (priority 32768 sys-id-ext 308)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0309
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    309
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33077  (priority 32768 sys-id-ext 309)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0500
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    500
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33268  (priority 32768 sys-id-ext 500)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0501
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    501
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33269  (priority 32768 sys-id-ext 501)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0502
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    502
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33270  (priority 32768 sys-id-ext 502)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0503
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    503
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33271  (priority 32768 sys-id-ext 503)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0666
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    666
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33434  (priority 32768 sys-id-ext 666)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0700
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    700
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33468  (priority 32768 sys-id-ext 700)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0705
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    705
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33473  (priority 32768 sys-id-ext 705)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0706
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    706
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33474  (priority 32768 sys-id-ext 706)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0800
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    800
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33568  (priority 32768 sys-id-ext 800)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0801
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    801
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33569  (priority 32768 sys-id-ext 801)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0900
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    900
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33668  (priority 32768 sys-id-ext 900)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN0901
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    901
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33669  (priority 32768 sys-id-ext 901)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+
+
+
+VLAN1001
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    1001
+             Address     346f.90b8.0980
+             Cost        7
+             Port        8 (GigabitEthernet0/8)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33769  (priority 32768 sys-id-ext 1001)
+             Address     381c.1a19.8880
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/8               Root FWD 4         128.8    P2p
+****************************************
+show spanning-tree detail
+**----------------------------------------**
+ VLAN0001 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 1, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 1, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 31 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0001 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 1, address 346f.90b8.0980
+   Designated bridge has priority 32769, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 32, received 3798586
+
+
+ VLAN0010 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 10, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 10, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 35 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0010 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 10, address 346f.90b8.0980
+   Designated bridge has priority 32778, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 40, received 3798573
+
+
+ VLAN0020 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 20, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 20, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0020 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 20, address 346f.90b8.0980
+   Designated bridge has priority 32788, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0021 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 21, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 21, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0021 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 21, address 346f.90b8.0980
+   Designated bridge has priority 32789, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0022 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 22, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 22, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0022 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 22, address 346f.90b8.0980
+   Designated bridge has priority 32790, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0023 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 23, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 23, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0023 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 23, address 346f.90b8.0980
+   Designated bridge has priority 32791, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0097 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 97, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 97, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0097 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 97, address 346f.90b8.0980
+   Designated bridge has priority 32865, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0099 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 99, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 99, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0099 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 99, address 346f.90b8.0980
+   Designated bridge has priority 32867, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798557
+
+
+ VLAN0100 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 100, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 100, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0100 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 100, address 346f.90b8.0980
+   Designated bridge has priority 32868, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798555
+
+
+ VLAN0101 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 101, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 101, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0101 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 101, address 346f.90b8.0980
+   Designated bridge has priority 32869, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0102 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 102, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 102, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0102 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 102, address 346f.90b8.0980
+   Designated bridge has priority 32870, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798557
+
+
+ VLAN0103 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 103, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 103, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0103 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 103, address 346f.90b8.0980
+   Designated bridge has priority 32871, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798557
+
+
+ VLAN0104 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 104, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 104, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0104 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 104, address 346f.90b8.0980
+   Designated bridge has priority 32872, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798557
+
+
+ VLAN0105 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 105, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 105, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0105 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 105, address 346f.90b8.0980
+   Designated bridge has priority 32873, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798557
+
+
+ VLAN0106 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 106, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 106, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 68 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 3 (GigabitEthernet0/3) of VLAN0106 is designated forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.3.
+   Designated root has priority 106, address 346f.90b8.0980
+   Designated bridge has priority 32874, address 381c.1a19.8880
+   Designated port id is 128.3, designated path cost 7
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   The port is in the portfast mode
+   Link type is point-to-point by default
+   BPDU: sent 340, received 0
+
+ Port 8 (GigabitEthernet0/8) of VLAN0106 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 106, address 346f.90b8.0980
+   Designated bridge has priority 32874, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 37, received 3798568
+
+
+ VLAN0107 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 107, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 107, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0107 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 107, address 346f.90b8.0980
+   Designated bridge has priority 32875, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0108 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 108, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 108, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0108 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 108, address 346f.90b8.0980
+   Designated bridge has priority 32876, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0109 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 109, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 109, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0109 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 109, address 346f.90b8.0980
+   Designated bridge has priority 32877, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0110 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 110, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 110, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0110 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 110, address 346f.90b8.0980
+   Designated bridge has priority 32878, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0111 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 111, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 111, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0111 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 111, address 346f.90b8.0980
+   Designated bridge has priority 32879, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0112 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 112, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 112, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0112 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 112, address 346f.90b8.0980
+   Designated bridge has priority 32880, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0113 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 113, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 113, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0113 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 113, address 346f.90b8.0980
+   Designated bridge has priority 32881, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0114 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 114, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 114, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0114 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 114, address 346f.90b8.0980
+   Designated bridge has priority 32882, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798555
+
+
+ VLAN0115 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 115, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 115, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0115 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 115, address 346f.90b8.0980
+   Designated bridge has priority 32883, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0116 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 116, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 116, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0116 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 116, address 346f.90b8.0980
+   Designated bridge has priority 32884, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0117 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 117, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 117, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0117 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 117, address 346f.90b8.0980
+   Designated bridge has priority 32885, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0118 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 118, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 118, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0118 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 118, address 346f.90b8.0980
+   Designated bridge has priority 32886, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0119 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 119, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 119, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0119 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 119, address 346f.90b8.0980
+   Designated bridge has priority 32887, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0120 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 120, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 120, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0120 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 120, address 346f.90b8.0980
+   Designated bridge has priority 32888, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0121 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 121, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 121, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0121 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 121, address 346f.90b8.0980
+   Designated bridge has priority 32889, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0122 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 122, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 122, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0122 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 122, address 346f.90b8.0980
+   Designated bridge has priority 32890, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0123 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 123, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 123, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0123 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 123, address 346f.90b8.0980
+   Designated bridge has priority 32891, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0200 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 200, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 200, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0200 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 200, address 346f.90b8.0980
+   Designated bridge has priority 32968, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0201 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 201, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 201, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0201 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 201, address 346f.90b8.0980
+   Designated bridge has priority 32969, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0202 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 202, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 202, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0202 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 202, address 346f.90b8.0980
+   Designated bridge has priority 32970, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 4, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0203 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 203, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 203, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0203 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 203, address 346f.90b8.0980
+   Designated bridge has priority 32971, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0204 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 204, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 204, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0204 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 204, address 346f.90b8.0980
+   Designated bridge has priority 32972, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798555
+
+
+ VLAN0205 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 205, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 205, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0205 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 205, address 346f.90b8.0980
+   Designated bridge has priority 32973, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798555
+
+
+ VLAN0206 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 206, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 206, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0206 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 206, address 346f.90b8.0980
+   Designated bridge has priority 32974, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798557
+
+
+ VLAN0207 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 207, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 207, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0207 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 207, address 346f.90b8.0980
+   Designated bridge has priority 32975, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0208 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 208, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 208, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0208 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 208, address 346f.90b8.0980
+   Designated bridge has priority 32976, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798555
+
+
+ VLAN0209 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 209, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 209, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0209 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 209, address 346f.90b8.0980
+   Designated bridge has priority 32977, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798555
+
+
+ VLAN0210 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 210, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 210, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0210 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 210, address 346f.90b8.0980
+   Designated bridge has priority 32978, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798557
+
+
+ VLAN0211 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 211, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 211, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0211 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 211, address 346f.90b8.0980
+   Designated bridge has priority 32979, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798557
+
+
+ VLAN0212 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 212, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 212, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0212 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 212, address 346f.90b8.0980
+   Designated bridge has priority 32980, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 4, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0213 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 213, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 213, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0213 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 213, address 346f.90b8.0980
+   Designated bridge has priority 32981, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0214 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 214, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 214, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0214 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 214, address 346f.90b8.0980
+   Designated bridge has priority 32982, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798555
+
+
+ VLAN0215 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 215, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 215, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0215 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 215, address 346f.90b8.0980
+   Designated bridge has priority 32983, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798557
+
+
+ VLAN0216 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 216, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 216, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0216 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 216, address 346f.90b8.0980
+   Designated bridge has priority 32984, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 4, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0217 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 217, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 217, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0217 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 217, address 346f.90b8.0980
+   Designated bridge has priority 32985, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0218 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 218, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 218, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0218 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 218, address 346f.90b8.0980
+   Designated bridge has priority 32986, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798555
+
+
+ VLAN0219 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 219, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 219, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0219 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 219, address 346f.90b8.0980
+   Designated bridge has priority 32987, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0220 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 220, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 220, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0220 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 220, address 346f.90b8.0980
+   Designated bridge has priority 32988, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798557
+
+
+ VLAN0221 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 221, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 221, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0221 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 221, address 346f.90b8.0980
+   Designated bridge has priority 32989, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798557
+
+
+ VLAN0222 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 222, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 222, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0222 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 222, address 346f.90b8.0980
+   Designated bridge has priority 32990, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798555
+
+
+ VLAN0223 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 223, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 223, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0223 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 223, address 346f.90b8.0980
+   Designated bridge has priority 32991, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798555
+
+
+ VLAN0308 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 308, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 308, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0308 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 308, address 346f.90b8.0980
+   Designated bridge has priority 33076, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798555
+
+
+ VLAN0309 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 309, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 309, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0309 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 309, address 346f.90b8.0980
+   Designated bridge has priority 33077, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798555
+
+
+ VLAN0500 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 500, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 500, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0500 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 500, address 346f.90b8.0980
+   Designated bridge has priority 33268, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0501 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 501, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 501, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 27 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0501 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 501, address 346f.90b8.0980
+   Designated bridge has priority 33269, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 56, received 3798545
+
+
+ VLAN0502 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 502, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 502, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0502 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 502, address 346f.90b8.0980
+   Designated bridge has priority 33270, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798555
+
+
+ VLAN0503 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 503, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 503, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 21 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0503 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 503, address 346f.90b8.0980
+   Designated bridge has priority 33271, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 22, received 2337075
+
+
+ VLAN0666 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 666, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 666, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0666 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 666, address 346f.90b8.0980
+   Designated bridge has priority 33434, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798557
+
+
+ VLAN0700 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 700, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 700, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0700 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 700, address 346f.90b8.0980
+   Designated bridge has priority 33468, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0705 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 705, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 705, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0705 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 705, address 346f.90b8.0980
+   Designated bridge has priority 33473, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798569
+
+
+ VLAN0706 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 706, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 706, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0706 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 706, address 346f.90b8.0980
+   Designated bridge has priority 33474, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798560
+
+
+ VLAN0800 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 800, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 800, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0800 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 800, address 346f.90b8.0980
+   Designated bridge has priority 33568, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798567
+
+
+ VLAN0801 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 801, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 801, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0801 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 801, address 346f.90b8.0980
+   Designated bridge has priority 33569, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0900 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 900, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 900, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0900 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 900, address 346f.90b8.0980
+   Designated bridge has priority 33668, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 3, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN0901 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 901, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 901, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN0901 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 901, address 346f.90b8.0980
+   Designated bridge has priority 33669, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+
+
+ VLAN1001 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 1001, address 381c.1a19.8880
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 1001, address 346f.90b8.0980
+  Root port is 8 (GigabitEthernet0/8), cost of root path is 7
+  Topology change flag not set, detected flag not set
+  Number of topology changes 23 last change occurred 6d07h ago
+          from GigabitEthernet0/5
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 8 (GigabitEthernet0/8) of VLAN1001 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.8.
+   Designated root has priority 1001, address 346f.90b8.0980
+   Designated bridge has priority 33769, address b4a4.e379.3400
+   Designated port id is 128.7, designated path cost 3
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 23, received 3798556
+****************************************
+show license all
+**----------------------------------------**
+                        ^
+% Invalid input detected at '^' marker.
+****************************************
+show stormcontroll
+**----------------------------------------**
+                     ^
+% Invalid input detected at '^' marker.
+****************************************
