@@ -35,7 +35,9 @@ COMMANDS = ["show clock",
             "show spanning-tree",
             "show spanning-tree detail",
             "show license all",
-            "show stormcontroll"
+            "show stormcontroll",
+            "show vlan",
+            "show vlan | include active"
             ]
 
 VRF_COMMANDS = ["show ip route vrf <VRF>",

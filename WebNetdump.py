@@ -13,7 +13,7 @@ import pandas
 import shutil
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'ed318f035ce728eed6084dfefaa06545'
+app.config['SECRET_KEY'] = 'ed318f035ce728eed6084dfefaa06545'  #used for anty TCP-Highjacking in flask
 OUTPUT_DIR ="./output"
 DUMP_DIR = "./dump"
 
