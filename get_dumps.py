@@ -66,6 +66,7 @@ def dump_worker(device:dict):   #  Main Thread for SSH-Session and File creation
     try:
         from scrapli.driver.core  import  NXOSDriver
         from scrapli.driver.core.cisco_iosxr.sync_driver import IOSXRDriver
+        from netmiko import ConnectHandler
         OUTPUT_DIR="./dump"
         vrf_enabled = False
         is_nx_os = False
