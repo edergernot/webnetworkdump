@@ -1,0 +1,7 @@
+version: "0.1"
+services:
+  app:
+    build: .
+    command: python WebNetdump.py
+    ports:
+      - "5000:5000"
