@@ -51,7 +51,7 @@ def worker_ssh_logon(IP):
             hosttype = "cisco_nxos_ssh"
         elif hostname[:username_len+1] == username+"@":
             ssh.disconnect()
-            ssh_session = ConnectHandler(device_type="paloalto_panos", ip=hostip, username=user, password=pwd)
+            ssh_session = ConnectHandler(device_type="paloalto_panos", ip=IP, username=username, password=password)
             testpalo = ssh_session.send_command("show system info")
             if "model: PA-" in testpalo:
                 hosttype = "palo"
