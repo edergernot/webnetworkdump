@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h3> Device Parse Page</h3>
+    <p></p>
+    <p>Parse is done and files saved in Output Folder</p>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Parsing done <a class="ml-2" href="{{ url_for('download_dump') }}">Download Collected Data now</a>
+        </small>
+    </div>
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h3> A simple Flask application to get infos out of networkdevices</h3>
+    <p></p>
+    <p>This tools will discover Ip-Networks and try to login via SSH with the provided Credentials.</p>
+    <p>When Discovery is done you can do a Dump and it will do a SSH-Session to every Device and do a bunch of commands to get Network Status</p>
+    <p>Data will be stored in Files and Excelfiles will be generated for example all Interfaces</p>
+    <p></p>
+    <p>There are current {{number_of_devices}} devices ready for parse</p>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Start Discovery? <a class="ml-2" href="{{ url_for('device_discovery') }}">Discover Devices now</a>
+        </small>
+    </div>
+
+{% endblock content %}

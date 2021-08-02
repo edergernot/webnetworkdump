@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h3> Now we try to reach hosts in network {{ip_network}}</h3>
+    <p>TCP Port 22 listening on Hosts: {{(hosts)}} </p>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Start to do a Logon? <a class="ml-2" href="{{ url_for('progress_logon') }}">Login to the Devices Now</a>
+        </small>
+    </div>
+      
+    
+{% endblock content %}

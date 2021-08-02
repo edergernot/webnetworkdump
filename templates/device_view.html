@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h3> Device View </h3>
+    <table class="table">
+        <thead>
+            <th>hostname</th>
+            <th>ip</th>
+            <th>type</th>
+            <th>enabled</th>
+        </thead>
+        <tbody>
+            {% for device in networksdevices %}
+                <tr>{{ device.hostname }}</tr>
+                <tr>{{ device.ip }}</tr>
+                <tr>{{ device.type }}</tr>
+                <tr>{{ device.enabled}}</tr>
+            {% endfor %}
+        </tbody>
+    <p></p>
+{% endblock content %}
