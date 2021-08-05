@@ -11,6 +11,7 @@ from netmiko import ConnectHandler
 from ntc_templates.parse import parse_output 
 import pandas
 import shutil
+import pickle
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ed318f035ce728eed6084dfefaa06545'  #used for anty TCP-Highjacking in flask
@@ -211,7 +212,8 @@ def parse():
             excelfiles += 1
         except Exception as e:
             print (e)
-    shutil.make_archive("./output/NetworkDump", 'zip', "./dump")
+    shutil.make_archive("./output/NetworkDump", 'zip', "./dump") # create NetworkDump.zip from folder dump
+    pickle.dump(dump_data, open("dump_data.pickle", "wb")) # save 'dump_data' dictonary to file
     return render_template("parse.html",number_of_devices=len(networkdevices),excelfiles=excelfiles)
 
 @app.route("/dump")
@@ -261,10 +263,8 @@ def device_view():# Not working Now
 
 @app.route("/download_dump")
 def download_dump():
-	#path = "html2pdf.pdf"
-	#path = "info.xlsx"
+    # Export dump_data
 	path = "./output/NetworkDump.zip"
-	#path = "sample.txt"
 	return send_file(path, as_attachment=True)
 
 if __name__ == "__main__":
