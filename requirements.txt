@@ -6,6 +6,7 @@ cryptography==3.4.7
 dash==1.21.0
 dash-bootstrap-components==0.13.0
 dash-core-components==1.17.1
+dash-cytoscape==0.3.0
 dash-html-components==1.1.4
 dash-table==4.12.0
 et-xmlfile==1.1.0
@@ -14,6 +15,7 @@ Flask-Compress==1.10.1
 Flask-WTF==0.15.1
 future==0.18.2
 itsdangerous==2.0.1
+jaal==0.0.9
 Jinja2==3.0.1
 MarkupSafe==2.0.1
 netmiko==3.4.0

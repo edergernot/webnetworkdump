@@ -49,7 +49,8 @@ for line in CDPs:
         nodes.append(node)
   
 for node in nodes:
-    node_element = {'data':{'id':node['id'],'label':node['type']}}
+    node_element = {'data':{'id':node['id'],'label':node['type']},
+                    'classes':node['type']}
     node_elements.append(node_element)
 for link in links:
     link_element = {'data':{'id':f"Link_{make_link_id(link)}",'source':link["from"],'target':link["to"],'key':f"{make_link_id(link)}","classes": "bezier"}}
@@ -78,15 +79,43 @@ app.layout = html.Div([
         elements=cyto_elements,
         layout={'name': 'breadthfirst','root':'[id ]'},
         style={'width': '75%', 'height': '500px'},
-        stylesheet=[{
-            'selector': 'node',
+        stylesheet=[
+            {'selector': 'node',
             'style': {
             'label': 'data(id)'}},
             {'selector': 'Link',
             'style': {
                 'curve-style': 'bezier',
-                'line-color': 'gray'}
-            }]
+                'line-color': 'gray'}},
+            {'selector': '.Host',
+             'style':{
+                 'shape':'square',
+                 'background-image':['./assets/sq_laptop.svg'],
+                 'background-opacity': 0,
+                 'background-fit': 'contain',
+                 'background-clip': 'none',
+                 'width': '100px',
+                 'height': '100px'}},
+            {'selector': '.Router',
+             'style':{
+                 'background-image':['./assets/c_router.svg'],
+                 'background-opacity': 0,
+                 'background-fit': 'contain',
+                 'background-clip': 'none',
+                 'width': '100px',
+                 'height': '100px'
+            }},
+            {'selector': '.Switch',
+            'style':{
+                 'shape':'square',
+                 'background-image':['./assets/sq_switch.svg'],
+                 'background-opacity': 0,
+                 'background-fit': 'contain',
+                 'background-clip': 'none',
+                 'width': '100px',
+                 'height': '100px'
+             }},
+            ]
     )])
 
 

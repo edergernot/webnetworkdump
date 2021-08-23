@@ -12,6 +12,8 @@ from ntc_templates.parse import parse_output
 import pandas
 import shutil
 import pickle
+import subprocess
+import webbrowser
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ed318f035ce728eed6084dfefaa06545'  #used for anty TCP-Highjacking in flask
@@ -266,6 +268,15 @@ def download_dump():
     # Export dump_data
 	path = "./output/NetworkDump.zip"
 	return send_file(path, as_attachment=True)
+
+@app.route("/draw_diagram")
+def draw_diagram():
+    #Run graphs.py this generates the drawing
+    process = subprocess.Popen(['python', 'graphs.py'])
+    webbrowser.open_new_tab('http://localhost:8050')
+    return render_template("index.html",number_of_devices=len(networkdevices),excelfiles=excelfiles) 
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
