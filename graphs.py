@@ -35,7 +35,10 @@ for line in CDPs:
     link_exist = False
     link = {}
     node = {}
-    node["id"]=line['destination_host'].split(".")[0]
+    try:
+        node["id"]=line['destination_host'].split(".")[0]
+    except KeyError:
+        continue
     node["type"]=line['capabilities'].split(" ")[0] 
     link["from"]=line['Devicename']
     link["to"]=line['destination_host'].split(".")[0]

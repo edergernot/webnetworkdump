@@ -50,7 +50,7 @@ def parse_textfsm(data,file,nos):
     try:    
         parsed_output = parse_output(platform=platform, command=command, data=raw_cli_output)
     except Exception as e:
-        # print (f"Error with Textfsm-Parser\n{e}")
+        #print (f"Error with Textfsm-Parser\n{e}")
         return("Error","Error")
     return(command, parsed_output, vrf)
 
