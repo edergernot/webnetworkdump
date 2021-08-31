@@ -1,0 +1,7 @@
+./dump/*
+./dump*
+./output/*
+./output*
+./venv
+*pychache*
+*.pickle
