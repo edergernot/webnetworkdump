@@ -20,7 +20,7 @@ app.config['SECRET_KEY'] = 'ed318f035ce728eed6084dfefaa06545'  #used for anty TC
 OUTPUT_DIR ="./output"
 DUMP_DIR = "./dump"
 
-networkdevices = []
+networkdevices = [] #List of Devices where successsfull login contains Device as dict
 reachable = []
 username = ""
 password = ""
@@ -29,6 +29,7 @@ ssh_enabled_ips = []
 dump_data = {}
 excelfiles = 0
 config_files = 0
+number_of_dumpfiles =0
 
 #Task have share Global Vars have to be in Main-App
 def worker_ssh_test(IP):
@@ -191,8 +192,10 @@ def parse():
                 if "show system info\n" in command:
                     nos="panos"
                 parsed_output = parse_textfsm(command,file,nos) 
+                #print(parsed_output)
                 if parsed_output==("Error","Error"):  #Error in parsing, Next Commmand
-                    continue
+                   #print("Error while Parsing")
+                   continue
                 key=parsed_output[0].replace(" ","_")
                 if parsed_output[2] != '':  # vrf in command 
                     add_to_data_vrf(key,parsed_output[1],hostname,parsed_output[2])
@@ -236,8 +239,13 @@ def dump():
     results = threads.map( dump_worker, networkdevices )
     threads.close()
     threads.join()
-    print (networkdevices)
-    return render_template("dump.html",number_of_devices=len(networkdevices))
+    files = os.listdir(DUMP_DIR)
+    try:
+        files.remove("parsed")
+        files.remove("running")
+    except Exception:
+        pass
+    return render_template("dump.html",number_of_devices=len(networkdevices),number_of_dumpfiles=len(files))
 
 @app.route("/progress")
 def progress():
@@ -274,7 +282,7 @@ def draw_diagram():
     #Run graphs.py this generates the drawing
     process = subprocess.Popen(['python', 'graphs.py'])
     webbrowser.open_new_tab('http://localhost:8050')
-    return render_template("index.html",number_of_devices=len(networkdevices),excelfiles=excelfiles) 
+    return render_template("parse.html",number_of_devices=len(networkdevices),excelfiles=excelfiles) 
 
 
 
