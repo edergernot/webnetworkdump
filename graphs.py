@@ -21,6 +21,7 @@ else:
 if CDPs == []:
     print ("No Data Found")
     exit
+
 def make_link_id(link):
     id = f"{link['from']}-{link['to']}_{link['local_port']}-{link['remote_port']}"
     return(id)
@@ -28,6 +29,31 @@ def make_link_id(link):
 def make_reverse_link_id(link):
     id = f"{link['to']}-{link['from']}_{link['remote_port']}-{link['local_port']}"
     return(id)
+
+def short_portname(port):
+    if "GigabitEthernet" in port:
+        newport = port.replace("GigabitEthernet", "Gi")
+    elif "FastEthernet" in port:
+        newport = port.replace("FastEthernet", "Fa")
+    elif "FortyGigabitEthernet" in port:
+        newport = port.replace("FortyGigabitEthernet", "Fo")
+    elif "HundredGigE" in port:
+        newport = port.replace("HundredGigE", "Hu")
+    elif "TenGigabitEthernet" in port:
+        newport = port.replace("TenGigabitEthernet", "Te")
+    elif "TwentyFiveGigE" in port:
+        newport = port.replace("TwentyFiveGigE", "Twe")
+    elif "TwoGigabitEthernet" in port:
+        newport = port.replace("TwoGigabitEthernet", "Two")
+    elif "FiveGigabitEthernet" in port:
+        newport = port.replace("FiveGigabitEthernet", "Fi")
+    elif "FourHundredGigE" in port:
+        newport = port.replace("FourHundredGigE", "400G")
+    elif "Ethernet" in port:
+        newport = port.replace("Ethernet", "Eth")
+    else:
+        newport = port
+    return (newport)
 
 
 for line in CDPs:
@@ -42,8 +68,8 @@ for line in CDPs:
     node["type"]=line['capabilities'].split(" ")[0] 
     link["from"]=line['Devicename']
     link["to"]=line['destination_host'].split(".")[0]
-    link["local_port"]=line["local_port"]
-    link["remote_port"]=line["remote_port"]
+    link["local_port"]=short_portname(line["local_port"])
+    link["remote_port"]=short_portname( line["remote_port"])
     links.append(link)
     for existing_node in nodes:  # check if node allready exist
         if node["id"] == existing_node["id"]:
@@ -52,12 +78,12 @@ for line in CDPs:
         nodes.append(node)
   
 for node in nodes:
-    node_element = {'data':{'id':node['id'],'label':node['type']},
+    node_element = {'data':{'id':node['id'],'label':node['id']},
                     'classes':node['type']}
     node_elements.append(node_element)
 for link in links:
-    link_element = {'data':{'id':f"Link_{make_link_id(link)}",'source':link["from"],'target':link["to"],'key':f"{make_link_id(link)}","classes": "bezier"}}
-    revers_element = {'data':{'id':f"Link_{make_reverse_link_id(link)}",'source':link["to"],'target':link["from"],'key':f"{make_reverse_link_id(link)}","classes": "bezier"}}
+    link_element = {'data':{'id':f"Link_{make_link_id(link)}",'source':link["from"],'target':link["to"],'key':f"{make_link_id(link)}","classes": "bezier","local_port":link["local_port"],"remote_port":link["remote_port"]}}
+    revers_element = {'data':{'id':f"Link_{make_reverse_link_id(link)}",'source':link["to"],'target':link["from"],'key':f"{make_reverse_link_id(link)}","classes": "bezier","local_port":link["remote_port"],"remote_port":link["local_port"]}}
     if revers_element in node_elements:
         continue
     node_elements.append(link_element)
@@ -81,15 +107,24 @@ app.layout = html.Div([
         id='cytoscape',
         elements=cyto_elements,
         layout={'name': 'breadthfirst','root':'[id ]'},
-        style={'width': '75%', 'height': '500px'},
+        style={'width': '100%', 'height': '1000px'},
         stylesheet=[
             {'selector': 'node',
             'style': {
             'label': 'data(id)'}},
             {'selector': 'Link',
             'style': {
+                "text-background-color": "white",
+                "text-background-opacity": 1,
+                "text-background-shape": "round-rectangle",
                 'curve-style': 'bezier',
-                'line-color': 'gray'}},
+                'line-color': 'gray',
+                'source-label':'data(local_port)',
+                'target-label':'data(remote_port)',
+                "source-text-offset": "100px",
+                "target-text-offset": "100px",
+                "source-text-rotation": "autorotate",
+		        "target-text-rotation": "autorotate",}},
             {'selector': '.Host',
              'style':{
                  'shape':'square',

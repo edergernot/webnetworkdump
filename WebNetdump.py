@@ -285,6 +285,5 @@ def draw_diagram():
     return render_template("parse.html",number_of_devices=len(networkdevices),excelfiles=excelfiles) 
 
 
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
