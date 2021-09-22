@@ -8,7 +8,7 @@ class DeviceDiscoveryForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2,max=30)])
     password = PasswordField('Password', validators=[DataRequired()])
     ip_network = StringField('IP-Network (like 192.168.1.0/24)', validators=[DataRequired()])
-    submit = SubmitField('Do TCP-Portscan')
+    submit = SubmitField('Start Discovery')
 
 
 

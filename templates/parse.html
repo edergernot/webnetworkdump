@@ -1,14 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h3> Device Parse Page</h3>
+    <h3> Device Dump Done</h3>
     <p></p>
-    <p>Parse is done and files saved in Output Folder</p>
+    <p>Dump and parsing is done and files saved in Output Folder</p>
     <div class="border-top pt-3">
-        <small class="text-muted">
             Parsing done <a class="ml-2" href="{{ url_for('download_dump') }}">Download Collected Data now</a><p></p>
-            You can start the Network Drawing (works best with Googlechrome) : <a class="ml-2" href="{{ url_for('draw_diagram') }}">Draw the Network now</a>
+            You can start the Network Drawing Engine(works best with Googlechrome) : <a class="ml-2" href="{{ url_for('draw_diagram') }}">Start Engine</a>
             <p></p>
             If no fresh tab opens, go to Network Drawing in the CommandBar! Or Click  <a class="ml-2" href="http://localhost:8050"> HERE </a>
-        </small>
     </div>
 {% endblock content %}

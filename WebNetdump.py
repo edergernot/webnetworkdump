@@ -1,8 +1,8 @@
 from datetime import time
+from db_model import network_device
 import os
 from flask import Flask, render_template, flash, url_for, redirect, send_file
 from wtforms.form import FormMeta
-from wtforms.validators import HostnameValidation
 from forms import DeviceDiscoveryForm
 from discovery import *  
 from get_dumps import *
@@ -14,13 +14,19 @@ import shutil
 import pickle
 import subprocess
 import webbrowser
+from flask_sqlalchemy import SQLAlchemy
+import db_model
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ed318f035ce728eed6084dfefaa06545'  #used for anty TCP-Highjacking in flask
+app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dump_db.sqlite3'
+app.config ['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
 OUTPUT_DIR ="./output"
 DUMP_DIR = "./dump"
 
-networkdevices = [] #List of Devices where successsfull login contains Device as dict
 reachable = []
 username = ""
 password = ""
@@ -29,7 +35,55 @@ ssh_enabled_ips = []
 dump_data = {}
 excelfiles = 0
 config_files = 0
-number_of_dumpfiles =0
+
+
+def number_dump_files():
+    num = 0
+    try:
+        files = os.listdir(DUMP_DIR)
+        for file in files:
+            if "_command.txt" in file:
+                num += 1
+        return(num)
+    except Exception as e:
+        return (0)
+
+def number_excelfiles():
+    num = 0
+    try:
+        files = os.listdir(f"{DUMP_DIR}/parsed")
+        for file in files:
+            if ".xlsx" in file:
+                num += 1
+        return(num)
+    except Exception as e:
+        return (0)
+
+def get_status():
+    global networkdevices
+    number_of_dumpfiles = number_dump_files()
+    number_of_excelfiles = number_excelfiles()
+    status={"number_of_dumpfiles":number_of_dumpfiles,
+            "excelfiles":number_of_excelfiles,
+            "networkdevices":len(network_device.query.all())}
+    return(status)
+
+def GetDevicesFromDB():
+    networkdevices = []
+    for db_device in network_device.query.all():
+        device={}
+        device["host"]=db_device.device_ip
+        device["hostname"]=db_device.device_name
+        device["auth_strict_key"]=False
+        device["transport"]="paramiko"
+        device["type"]=db_device.device_type
+        device["auth_username"]=db_device.device_username
+        device["auth_password"]=db_device.device_password
+        device["enabled"]=db_device.device_enabled
+        networkdevices.append(device)
+    print (networkdevices)
+    return(networkdevices)
+         
 
 #Task have share Global Vars have to be in Main-App
 def worker_ssh_test(IP):
@@ -61,16 +115,28 @@ def worker_ssh_logon(IP):
                 hosttype = "palo"
         else:
             hosttype = "other"
-        device = {"host":IP,
-            "hostname":hostname[:-1],
-            "auth_username":username,
-            "auth_password":password,
-            "type":hosttype,
-            "transport":"paramiko",
-            "auth_strict_key": False,
-            "enabled":True
-            }
-        networkdevices.append(device)
+        #### Now in DB  ####
+        #device = {"host":IP,
+        #    "hostname":hostname[:-1],
+        #    "auth_username":username,
+        #    "auth_password":password,
+        #    "type":hosttype,
+        #    "transport":"paramiko",
+        #    "auth_strict_key": False,
+        #    "enabled":True
+        #    }
+        #networkdevices.append(device)
+
+        # Add Device to Database (network_device)
+        db_device=network_device(
+            device_name=hostname[:-1],
+            device_ip=IP,
+            device_username=username,
+            device_type=hosttype,
+            device_enabled=True,
+            device_password=password)
+        db.session.add(db_device)
+        db.session.commit()
     except Exception as e:
         pass
     return
@@ -126,11 +192,11 @@ def add_to_data_vrf(key,data,hostname,vrf):
 
 @app.route("/")
 def index():
-    return render_template("index.html",number_of_devices=len(networkdevices),excelfiles=excelfiles)
+    content=get_status()
+    return render_template("index.html",status=content)
 
 @app.route("/device_discovery", methods=['GET', 'POST'])
 def device_discovery():
-    global username, password, ip_network
     reachable = []
     ssh_enabled_ips = []
     form = DeviceDiscoveryForm()
@@ -139,19 +205,45 @@ def device_discovery():
         password=form.password.data
         ip_network=form.ip_network.data
         if not check_ip_network(ip_network):
-            flash(f'non valid IPv4 Network: {ip_network}', 'error')
+            flash(f'non valid IPv4 Network: {ip_network}', 'danger')
             return redirect(url_for('device_discovery'))
         else:
-            flash(f'Device Discovery is Startet...', 'success')
+            # flash(f'Device Discovery is Startet...', 'success')
             return redirect(url_for('progress'))
-    return render_template("device_discovery.html",form=form,title="Device Discovery",number_of_devices=len(networkdevices))
+    content=get_status()
+    return render_template("device_discovery.html",form=form,title="Device Discovery",status=content)
 
 @app.route("/about")
 def about():
-    return render_template("about.html",number_of_devices=len(networkdevices))
+    content=get_status()
+    return render_template("about.html",status=content) 
 
-@app.route("/parse")
-def parse():
+@app.route("/dump")
+def dump():
+    networkdevices = GetDevicesFromDB()
+    if len(networkdevices) == 0:
+        redirect ("device_discovery")
+    # delete directory if old dumps exist and create new dir
+    if os.path.exists("./dump"):
+        shutil.rmtree("./dump", ignore_errors=False, onerror=None)
+    path = os.path.join("./","dump")
+    os.mkdir(path)
+    if len(networkdevices) <= 50 :
+        num_threads=len(networkdevices)
+    else:
+        num_threads=50
+
+    threads = ThreadPool( num_threads )
+    results = threads.map( dump_worker, networkdevices )
+    threads.close()
+    threads.join()
+    files = os.listdir(DUMP_DIR)
+    try:
+        files.remove("parsed")
+        files.remove("running")
+    except Exception:
+        pass
+    #Parsing the Dump-Files
     OUTPUT_DIR="./dump/parsed"
     # if no dum exists, create one
     if not os.path.exists("./dump"):
@@ -219,57 +311,29 @@ def parse():
             print (e)
     shutil.make_archive("./output/NetworkDump", 'zip', "./dump") # create NetworkDump.zip from folder dump
     pickle.dump(dump_data, open("dump_data.pickle", "wb")) # save 'dump_data' dictonary to file
-    return render_template("parse.html",number_of_devices=len(networkdevices),excelfiles=excelfiles)
-
-@app.route("/dump")
-def dump():
-    if len(networkdevices) == 0:
-        redirect ("device_discovery")
-    # delete directory if old dumps exist and create new dir
-    if os.path.exists("./dump"):
-        shutil.rmtree("./dump", ignore_errors=False, onerror=None)
-    path = os.path.join("./","dump")
-    os.mkdir(path)
-    if len(networkdevices) <= 50 :
-        num_threads=len(networkdevices)
-    else:
-        num_threads=50
-
-    threads = ThreadPool( num_threads )
-    results = threads.map( dump_worker, networkdevices )
-    threads.close()
-    threads.join()
-    files = os.listdir(DUMP_DIR)
-    try:
-        files.remove("parsed")
-        files.remove("running")
-    except Exception:
-        pass
-    return render_template("dump.html",number_of_devices=len(networkdevices),number_of_dumpfiles=len(files))
+    content=get_status()
+    return render_template("parse.html",status=content)
+    
 
 @app.route("/progress")
 def progress():
-    global username, password, ip_network, ssh_enabled_ips, networkdevices
+    global username, password, ip_network, ssh_enabled_ips
+    content=get_status()
+    render_template("/progress.html", ip_network=ip_network, title="TCP Scan", hosts=ssh_enabled_ips,status=content)
     ssh_enabled_ips=[]
     form = DeviceDiscoveryForm()
     ssh_enabled_ips=tcpscan(ip_network)
-    return render_template("progress.html", ip_network=ip_network, title="TCP Scan", hosts=ssh_enabled_ips)
-
-@app.route("/progress_logon") 
-def progress_logon():
-    global ssh_enabled_ips
     unique_ips = list(set(ssh_enabled_ips))
-    ssh_enabled_ips = []
-    reachable = []
     try_logon(unique_ips)
-    with open(f"{OUTPUT_DIR}/Networdevices.txt","w") as f:
-        for device in networkdevices:
-            f.write(f"{device['hostname']},{device['host']},{device['type']},{device['enabled']}\n")
-    return render_template("/progress_logon.html",number_of_devices=len(networkdevices))
+    content=get_status()
+    return render_template("/progress_logon.html",status=content)
+
 
 @app.route("/device_view")
 def device_view():# Not working Now
-    return render_template("/device_view.html", networkdevices=networkdevices)
+    netdevices = network_device.query.all()
+    content=get_status()
+    return render_template("/device_view.html", status=content, devices=netdevices)
 
 @app.route("/download_dump")
 def download_dump():
@@ -280,10 +344,22 @@ def download_dump():
 @app.route("/draw_diagram")
 def draw_diagram():
     #Run graphs.py this generates the drawing
+    content=get_status()
     process = subprocess.Popen(['python', 'graphs.py'])
     webbrowser.open_new_tab('http://localhost:8050')
-    return render_template("parse.html",number_of_devices=len(networkdevices),excelfiles=excelfiles) 
+    return render_template("parse.html",status=content) 
 
+@app.route("/delete")
+def delete():
+    db.session.query(network_device).delete()
+    db.session.commit()
+    if os.path.exists("./dump"):
+        shutil.rmtree("./dump", ignore_errors=False, onerror=None)
+    path = os.path.join("./","dump")
+    os.mkdir(path)
+    flash('All device data deleted', 'success')
+    content=get_status()
+    return redirect ("device_view")
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0")   #Needet when Container is used

@@ -1,10 +1,21 @@
 # WebNetworkDump
+Easystart with DockerContainer on local mashine!
 
-Like Networkdump but with WEB GUI.
-Run as Flask App.
+- Clone Git-Repo:
+  - ```git clone https://kbc-gitlab.kapsch.co.at/ederg/webnetworkdump.git```
 
-http://localhost:5000
+- Build Container:
+  - ```docker-compose build```
+
+- Start Container:
+  - ```docker-compose up```
+
+- Start dumping the Network
+  - ```http://localhost:5000```
 
 Just add devicecredentials and discovery-network.
-Follow the liks, Discovery, Connect, Dump, Parse, then download the result
+Follow the liks, Discovery, Connect, Dump, Parse, then download the result.
+
+
+Create-DB : python create_db.py
 
