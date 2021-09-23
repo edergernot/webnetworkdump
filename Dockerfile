@@ -12,8 +12,10 @@ COPY  assets ./assets
 
 RUN mkdir output
 RUN mkdir dump
+RUN python create_db.py
 
 EXPOSE 5000
 EXPOSE 8050
+
 
 CMD [ "python", "./WebNetdump.py" ]
