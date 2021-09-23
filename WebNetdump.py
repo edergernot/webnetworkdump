@@ -60,7 +60,6 @@ def number_excelfiles():
         return (0)
 
 def get_status():
-    global networkdevices
     number_of_dumpfiles = number_dump_files()
     number_of_excelfiles = number_excelfiles()
     status={"number_of_dumpfiles":number_of_dumpfiles,
@@ -81,7 +80,6 @@ def GetDevicesFromDB():
         device["auth_password"]=db_device.device_password
         device["enabled"]=db_device.device_enabled
         networkdevices.append(device)
-    print (networkdevices)
     return(networkdevices)
          
 
@@ -138,7 +136,7 @@ def worker_ssh_logon(IP):
         db.session.add(db_device)
         db.session.commit()
     except Exception as e:
-        pass
+        print (e)
     return
 
 def tcpscan(ip_network):
@@ -156,7 +154,7 @@ def tcpscan(ip_network):
     return(reachable)
 
 def try_logon(ip_list):
-    global networkdevices
+    global networkdevices, reachable
     '''do a SSH Logon to all SSH Enabled Devices'''
     if len(ip_list) < 75:
         num_threads = len(ip_list)
@@ -197,6 +195,7 @@ def index():
 
 @app.route("/device_discovery", methods=['GET', 'POST'])
 def device_discovery():
+    global ip_network,username,password
     reachable = []
     ssh_enabled_ips = []
     form = DeviceDiscoveryForm()
@@ -321,7 +320,7 @@ def progress():
     content=get_status()
     render_template("/progress.html", ip_network=ip_network, title="TCP Scan", hosts=ssh_enabled_ips,status=content)
     ssh_enabled_ips=[]
-    form = DeviceDiscoveryForm()
+    #form = DeviceDiscoveryForm()
     ssh_enabled_ips=tcpscan(ip_network)
     unique_ips = list(set(ssh_enabled_ips))
     try_logon(unique_ips)
@@ -343,20 +342,46 @@ def download_dump():
 
 @app.route("/draw_diagram")
 def draw_diagram():
-    #Run graphs.py this generates the drawing
-    content=get_status()
-    process = subprocess.Popen(['python', 'graphs.py'])
-    webbrowser.open_new_tab('http://localhost:8050')
-    return render_template("parse.html",status=content) 
+    #Run graphs.py this generates the drawing, Check if its allready running
+    
+    command = 'ps aux|grep graphs.py'
+    ps = subprocess.Popen(command,shell=True, stdout = subprocess.PIPE) 
+    output_ps=str(ps.communicate()).split("'")[1]
+    print (f"*** Output Grep ***\n{output_ps}\n***********")
+    if "python" and  "graphs.py" in output_ps:
+        print ('**** Already Running ****')
+        for line in output_ps.split("\n"):
+            print(f"Line : {line} ")
+            if "python" and  "graphs.py" in line:
+                proc = line.split(" ")
+                kill_command=f"kill {proc}"
+    if os.path.exists("dump_data.pickle"):
+        process = subprocess.Popen(['python', 'graphs.py'])
+        webbrowser.open_new_tab('http://localhost:8050')
+        content=get_status()
+        return render_template("parse.html",status=content)
+    else:
+        content=get_status()
+        if (content["excelfiles"]<=1 or content["number_of_dumpfiles"]<=1) and content["networkdevices"]>=1:
+            return redirect('/dump')
+        else:   
+
+            return redirect('/device_discovery')
 
 @app.route("/delete")
 def delete():
+    #delete DB entries
     db.session.query(network_device).delete()
     db.session.commit()
+    #delete dump directory
     if os.path.exists("./dump"):
         shutil.rmtree("./dump", ignore_errors=False, onerror=None)
+    #create empty dump directory
     path = os.path.join("./","dump")
     os.mkdir(path)
+    #delete pickel file for data export to graph
+    if os.path.exists("dump_data.pickle"):
+        os.remove("dump_data.pickle")
     flash('All device data deleted', 'success')
     content=get_status()
     return redirect ("device_view")
