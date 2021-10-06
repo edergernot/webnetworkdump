@@ -38,7 +38,9 @@ COMMANDS = ["show clock",
             "show stormcontroll",
             "show vlan",
             "show vtp status",
-            "show vtp password"
+            "show vtp password",
+            "show mka summary",
+            "show authentication sessions"
             ]
 
 VRF_COMMANDS = ["show ip route vrf <VRF>",

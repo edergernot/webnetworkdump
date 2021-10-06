@@ -91,15 +91,19 @@ for link in links:
 for node in nodes: # find node with max links
     number_of_links = 0
     for link in links:
-        if node == link["from"] or node == link["to"]:
+        if node["id"] == link["from"] or node["id"] == link["to"]:
             number_of_links += 1
-    if number_of_links < max_links:
-        root_node = node
-        max_links = number_of_links
+        if number_of_links > max_links:
+            root_node = node
+            max_links = number_of_links
 
 root_node = f"'[ id = {root_node}]'"
 
 cyto_elements = node_elements
+
+print("*"*40)
+print(root_node)
+print(node_elements)
 
 app = dash.Dash(__name__)
 app.layout = html.Div([

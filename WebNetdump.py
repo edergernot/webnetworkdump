@@ -94,7 +94,7 @@ def worker_ssh_logon(IP):
     ###  Login and add device_dict to networkdevices
     try:
         device={}
-        global networkdevices, username, password
+        global networkdevices, username, password,reachable 
         ssh = ConnectHandler(device_type="cisco_ios", ip=IP, username=username, password=password)
         hostname = ssh.find_prompt()
         sh_ver = ssh.send_command("show version")
@@ -111,6 +111,7 @@ def worker_ssh_logon(IP):
             testpalo = ssh_session.send_command("show system info")
             if "model: PA-" in testpalo:
                 hosttype = "palo"
+                hostname = hostname.split("@")[1]
         else:
             hosttype = "other"
         #### Now in DB  ####
@@ -135,6 +136,8 @@ def worker_ssh_logon(IP):
             device_password=password)
         db.session.add(db_device)
         db.session.commit()
+        reachable = []
+
     except Exception as e:
         print (e)
     return
@@ -287,7 +290,11 @@ def dump():
                 if parsed_output==("Error","Error"):  #Error in parsing, Next Commmand
                    #print("Error while Parsing")
                    continue
-                key=parsed_output[0].replace(" ","_")
+                try: 
+                    key=parsed_output[0].replace(" ","_")
+                except TypeError:
+                    print ("Error in parsing")
+                    continue
                 if parsed_output[2] != '':  # vrf in command 
                     add_to_data_vrf(key,parsed_output[1],hostname,parsed_output[2])
                 else:
@@ -312,7 +319,6 @@ def dump():
     pickle.dump(dump_data, open("dump_data.pickle", "wb")) # save 'dump_data' dictonary to file
     content=get_status()
     return render_template("parse.html",status=content)
-    
 
 @app.route("/progress")
 def progress():
@@ -326,7 +332,6 @@ def progress():
     try_logon(unique_ips)
     content=get_status()
     return render_template("/progress_logon.html",status=content)
-
 
 @app.route("/device_view")
 def device_view():# Not working Now
@@ -378,6 +383,11 @@ def delete():
         shutil.rmtree("./dump", ignore_errors=False, onerror=None)
     #create empty dump directory
     path = os.path.join("./","dump")
+    os.mkdir(path) #delete dump directory
+    if os.path.exists("./output"):
+        shutil.rmtree("./output", ignore_errors=False, onerror=None)
+    #create empty dump directory
+    path = os.path.join("./","output")
     os.mkdir(path)
     #delete pickel file for data export to graph
     if os.path.exists("dump_data.pickle"):
