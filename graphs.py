@@ -101,10 +101,6 @@ root_node = f"'[ id = {root_node}]'"
 
 cyto_elements = node_elements
 
-print("*"*40)
-print(root_node)
-print(node_elements)
-
 app = dash.Dash(__name__)
 app.layout = html.Div([
     cyto.Cytoscape(
@@ -151,6 +147,16 @@ app.layout = html.Div([
             'style':{
                  'shape':'square',
                  'background-image':['./assets/sq_switch.svg'],
+                 'background-opacity': 0,
+                 'background-fit': 'contain',
+                 'background-clip': 'none',
+                 'width': '100px',
+                 'height': '100px'
+             }},
+            {'selector': '.Bridge',
+            'style':{
+                 'shape':'square',
+                 'background-image':['./assets/sq_wifi.svg'],
                  'background-opacity': 0,
                  'background-fit': 'contain',
                  'background-clip': 'none',

@@ -146,10 +146,10 @@ def tcpscan(ip_network):
     global reachable
     ''' do a TCP-Scan on an IPv4 Network'''
     ip_list = list(ipaddress.IPv4Network(ip_network).hosts())
-    if len(ip_list) < 75:
+    if len(ip_list) < 30:
         num_threads = len(ip_list)
     else:
-        num_threads = 75
+        num_threads = 30
     threads = ThreadPool( num_threads )
     results = threads.map( worker_ssh_test, ip_list )
     threads.close()
@@ -159,10 +159,10 @@ def tcpscan(ip_network):
 def try_logon(ip_list):
     global networkdevices, reachable
     '''do a SSH Logon to all SSH Enabled Devices'''
-    if len(ip_list) < 75:
+    if len(ip_list) < 30:
         num_threads = len(ip_list)
     else:
-        num_threads = 75
+        num_threads = 30
     threads = ThreadPool( num_threads )
     results = threads.map( worker_ssh_logon, ip_list )
     threads.close()
@@ -230,10 +230,10 @@ def dump():
         shutil.rmtree("./dump", ignore_errors=False, onerror=None)
     path = os.path.join("./","dump")
     os.mkdir(path)
-    if len(networkdevices) <= 50 :
+    if len(networkdevices) <= 30 :
         num_threads=len(networkdevices)
     else:
-        num_threads=50
+        num_threads=30
 
     threads = ThreadPool( num_threads )
     results = threads.map( dump_worker, networkdevices )
