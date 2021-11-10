@@ -153,7 +153,7 @@ app.layout = html.Div([
                  'width': '100px',
                  'height': '100px'
              }},
-            {'selector': '.Bridge',
+            {'selector': '.Trans-Bridge',
             'style':{
                  'shape':'square',
                  'background-image':['./assets/sq_wifi.svg'],
