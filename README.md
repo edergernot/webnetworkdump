@@ -14,7 +14,7 @@ Easystart with DockerContainer on local mashine!
   - ```http://localhost:5000```
 
 Just add devicecredentials and discovery-network.
-Follow the liks, Discovery, Connect, Dump, Parse, then download the result.
+Follow the links, Discovery, Connect, Dump, Parse, then download the result.
 
 
 Create-DB : python create_db.py
