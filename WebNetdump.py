@@ -206,7 +206,7 @@ def device_discovery():
         username=form.username.data
         password=form.password.data
         ip_network=form.ip_network.data
-        if not check_ip_network(ip_network):
+        if not check_ip_network(ip_network): #check if correct IP-Network, fire error if 333.0.0.1 is entered
             flash(f'non valid IPv4 Network: {ip_network}', 'danger')
             return redirect(url_for('device_discovery'))
         else:
