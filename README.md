@@ -14,5 +14,5 @@ Easystart with DockerContainer on local mashine!
   - ```http://localhost:5000```
 
 Just add devicecredentials and discovery-network.
-Follow the links, Discovery, Dump, Parse, then download the result.
+Follow the links, Discovery, Dump, then download the result as zip-file or build the CDP-Graph.
 
