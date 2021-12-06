@@ -62,7 +62,7 @@ for line in CDPs:
     link = {}
     node = {}
     try:
-        node["id"]=line['destination_host'].split(".")[0]
+        node["id"]=line['destination_host'].split(".")[0]  #remove Domain if exist
     except KeyError:
         continue
     node["type"]=line['capabilities'].split(" ")[0] 

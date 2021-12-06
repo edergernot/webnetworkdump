@@ -2,8 +2,10 @@
 Easystart with DockerContainer on local mashine!
 
 - Clone Git-Repo:
-  - ```git clone https://kbc-gitlab.kapsch.co.at/ederg/webnetworkdump.git```
+  - ```git clone https://github.com/edergernot/webnetworkdump```
 
+- Jump into that directory:
+  - ```cd webnetworkdump```
 - Build Container:
   - ```docker-compose build```
 
@@ -15,4 +17,6 @@ Easystart with DockerContainer on local mashine!
 
 Just add devicecredentials and discovery-network.
 Follow the links, Discovery, Dump, then download the result as zip-file or build the CDP-Graph.
+
+
 
