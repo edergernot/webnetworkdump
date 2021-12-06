@@ -25,6 +25,7 @@ Just add devicecredentials and discovery-network.
 Follow the links, Discovery, Dump, then download the result as zip-file or build the CDP-Graph.
 
 ## Sceenshots:
+![About](images/About.png)
 
 ![Startscreen](images/StartScreen.png)
 
@@ -32,7 +33,9 @@ Follow the links, Discovery, Dump, then download the result as zip-file or build
 
 ![DiscoverDone](images/DiscoveryDone.png)
 
-![ParseDonw](images/parsing_done.png)
+![ParseDone](images/parsing_done.png)
+
+![Graph](images/CDPneighbors.png)
 
 
 
