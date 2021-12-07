@@ -211,9 +211,22 @@ def device_discovery():
             return redirect(url_for('device_discovery'))
         else:
             # flash(f'Device Discovery is Startet...', 'success')
-            return redirect(url_for('progress'))
+            return redirect(url_for('discover_loading'))
     content=get_status()
     return render_template("device_discovery.html",form=form,title="Device Discovery",status=content)
+
+@app.route("/discover_loading")
+def discover_loading():
+    content=get_status()
+    return render_template('loading_discover.html', status=content, text='Discovery the Devices ...')
+
+
+@app.route("/dump_loading")
+def dump_loading():
+    content=get_status()
+    return render_template('loading_dump.html', status=content, text='Dumping the Devices ...')
+
+
 
 @app.route("/about")
 def about():
