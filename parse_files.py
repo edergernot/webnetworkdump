@@ -35,6 +35,8 @@ def parse_textfsm(data,file,nos):
         platform="cisco_ios"
     if nos == "panos":
         platform="paloalto_panos"
+    if nos == "asa":
+        platform="cisco_asa"
     if "show running" in command:
         if not os.path.isdir(RUN_DIR):
             os.makedirs(RUN_DIR)
@@ -50,7 +52,7 @@ def parse_textfsm(data,file,nos):
     try:    
         parsed_output = parse_output(platform=platform, command=command, data=raw_cli_output)
     except Exception as e:
-        #print (f"Error with Textfsm-Parser\n{e}")
+        print(e)
         return("Error","Error")
     return(command, parsed_output, vrf)
 

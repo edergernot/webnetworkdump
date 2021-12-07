@@ -16,6 +16,8 @@ import subprocess
 import webbrowser
 from flask_sqlalchemy import SQLAlchemy
 import db_model
+from rich import print
+
 
 
 app = Flask(__name__)
@@ -139,7 +141,7 @@ def worker_ssh_logon(IP):
         reachable = []
 
     except Exception as e:
-        print (e)
+        print(e)
     return
 
 def tcpscan(ip_network):
@@ -218,13 +220,13 @@ def device_discovery():
 @app.route("/discover_loading")
 def discover_loading():
     content=get_status()
-    return render_template('loading_discover.html', status=content, text='Discovery the Devices ...')
+    return render_template('loading_discover.html', status=content, text='One moment, I just discover the devices ...')
 
 
 @app.route("/dump_loading")
 def dump_loading():
     content=get_status()
-    return render_template('loading_dump.html', status=content, text='Dumping the Devices ...')
+    return render_template('loading_dump.html', status=content, text='Now I dump the devices and parse the receiving data ...')
 
 
 
@@ -296,6 +298,8 @@ def dump():
                 if "show version\n" in command:
                     if "NX-OS" in command:
                         nos="nxos"
+                    if "Cisco Adaptive Security Appliance" in command:
+                        nos="asa"
                 if "show system info\n" in command:
                     nos="panos"
                 parsed_output = parse_textfsm(command,file,nos) 
@@ -304,7 +308,7 @@ def dump():
                    #print("Error while Parsing")
                    continue
                 try: 
-                    key=parsed_output[0].replace(" ","_")
+                    key=nos+"_"+parsed_output[0].replace(" ","_")
                 except TypeError:
                     print ("Error in parsing")
                     continue
@@ -327,7 +331,7 @@ def dump():
             print (f"Generated {k} Excel-File")
             excelfiles += 1
         except Exception as e:
-            print (e)
+            print(e)
     shutil.make_archive("./output/NetworkDump", 'zip', "./dump") # create NetworkDump.zip from folder dump
     pickle.dump(dump_data, open("dump_data.pickle", "wb")) # save 'dump_data' dictonary to file
     content=get_status()

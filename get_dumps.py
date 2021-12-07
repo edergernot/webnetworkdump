@@ -64,6 +64,21 @@ PALO_COMMANDS = ["show system info",
                  "show routing route",
                  "show config running"]
 
+ASA_COMMANDS = ["show clock",
+            "show version",
+            "show running",
+            "show inventory",
+            "show interface detail",
+            "show interface",
+            "show route",
+            "show arp",
+            "show vpn-sessiondb detail l2l",
+            "show vpn-sessiondb anyconnect",
+            "show failover",
+            "show asp drop",
+            "show name",
+            "show xlate",
+            "show running-config object network"]
 
 
 
@@ -152,6 +167,32 @@ def dump_worker(device:dict):   #  Main Thread for SSH-Session and File creation
                 outputfile.write("*"*40)
                 outputfile.write("\n") 
                 for command in PALO_COMMANDS:
+                    outputfile.write(command)
+                    outputfile.write("\n")
+                    outputfile.write("**"+"-"*40+"**")
+                    outputfile.write("\n")
+                    commandoutput = ssh_session.send_command(command)
+                    outputfile.write(commandoutput) 
+                    outputfile.write("\n")
+                    outputfile.write("*"*40)
+                    outputfile.write("\n")
+                ssh_session.disconnect()
+        
+        #### Do commands on Cisco ASA ####
+        elif device_type == "asa":
+            hostip=device["host"]
+            user = device["auth_username"]
+            pwd = device["auth_password"]
+            ssh_session = ConnectHandler(device_type="paloalto_panos", ip=hostip, username=user, password=pwd)
+            prompt = ssh_session.find_prompt()
+            links = prompt.split("(")[0]
+            hostname = links.split("@")[1]
+            hostfilename = hostname +"_command.txt"
+            with open (f"{OUTPUT_DIR}/{hostfilename}","w") as outputfile:
+                outputfile.write("\n")
+                outputfile.write("*"*40)
+                outputfile.write("\n") 
+                for command in ASA_COMMANDS:
                     outputfile.write(command)
                     outputfile.write("\n")
                     outputfile.write("**"+"-"*40+"**")
