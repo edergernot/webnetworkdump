@@ -71,14 +71,21 @@ ASA_COMMANDS = ["show clock",
             "show interface detail",
             "show interface",
             "show route",
+            "show ospf",
+            "show ospf neighbor",
+            "show bgp summary"
             "show arp",
+            "show vpn-sessiondb"
             "show vpn-sessiondb detail l2l",
             "show vpn-sessiondb anyconnect",
             "show failover",
             "show asp drop",
             "show name",
             "show xlate",
-            "show running-config object network"]
+            "show running-config object network",
+            "show ipv6 route",
+            "show ipv6 neighbor",
+            "show ipv6 ospf"]
 
 
 
@@ -93,6 +100,7 @@ def dump_worker(device:dict):   #  Main Thread for SSH-Session and File creation
         device_type = device.pop("type")
         hostname = device.pop("hostname")
         enabled = device.pop("enabled")
+        #print(f"{hostname} : {device_type}")
         if device_type == "other":
             return
         if not enabled:
@@ -159,9 +167,8 @@ def dump_worker(device:dict):   #  Main Thread for SSH-Session and File creation
             pwd = device["auth_password"]
             ssh_session = ConnectHandler(device_type="paloalto_panos", ip=hostip, username=user, password=pwd)
             prompt = ssh_session.find_prompt()
-            links = prompt.split("(")[0]
-            hostname = links.split("@")[1]
-            hostfilename = hostname +"_command.txt"
+            hostname = prompt.split("@")[1]
+            hostfilename = hostname[:-1] +"_command.txt"
             with open (f"{OUTPUT_DIR}/{hostfilename}","w") as outputfile:
                 outputfile.write("\n")
                 outputfile.write("*"*40)
@@ -183,10 +190,8 @@ def dump_worker(device:dict):   #  Main Thread for SSH-Session and File creation
             hostip=device["host"]
             user = device["auth_username"]
             pwd = device["auth_password"]
-            ssh_session = ConnectHandler(device_type="paloalto_panos", ip=hostip, username=user, password=pwd)
+            ssh_session = ConnectHandler(device_type="cisco_asa", ip=hostip, username=user, password=pwd)
             prompt = ssh_session.find_prompt()
-            links = prompt.split("(")[0]
-            hostname = links.split("@")[1]
             hostfilename = hostname +"_command.txt"
             with open (f"{OUTPUT_DIR}/{hostfilename}","w") as outputfile:
                 outputfile.write("\n")

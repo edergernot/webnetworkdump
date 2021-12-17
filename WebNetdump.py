@@ -7,7 +7,7 @@ from forms import DeviceDiscoveryForm
 from discovery import *  
 from get_dumps import *
 from parse_files import *
-from netmiko import ConnectHandler
+from netmiko import ConnectHandler, SSHDetect
 from ntc_templates.parse import parse_output 
 import pandas
 import shutil
@@ -16,8 +16,6 @@ import subprocess
 import webbrowser
 from flask_sqlalchemy import SQLAlchemy
 import db_model
-from rich import print
-
 
 
 app = Flask(__name__)
@@ -96,26 +94,38 @@ def worker_ssh_logon(IP):
     ###  Login and add device_dict to networkdevices
     try:
         device={}
-        global networkdevices, username, password,reachable 
-        ssh = ConnectHandler(device_type="cisco_ios", ip=IP, username=username, password=password)
-        hostname = ssh.find_prompt()
-        sh_ver = ssh.send_command("show version")
-        username_len = len(username)
-        if " IOS XE " in sh_ver:
-            hosttype = "ios-xe"
-        elif " IOS " in sh_ver:
-            hosttype = "cisco_ios"
-        elif "NX-OS" in sh_ver:
-            hosttype = "cisco_nxos_ssh"
-        elif hostname[:username_len+1] == username+"@":
+        global networkdevices, username, password,reachable
+        testdev = {'device_type':"autodetect", 'ip':IP, 'username':username, 'password':password}
+        sshtest = SSHDetect(**testdev)
+        device_type = sshtest.autodetect()
+        print (f"{IP}: {device_type}")
+        if device_type == None:
+            device_type = 'paloalto_panos'
+        if device_type != 'paloalto_panos':
+            ssh = ConnectHandler(device_type=device_type, ip=IP, username=username, password=password)
+            hostname = ssh.find_prompt()
+            sh_ver = ssh.send_command("show version")
+            if " IOS XE " in sh_ver:
+                hosttype = "ios-xe"
+            elif " IOS " in sh_ver:
+                hosttype = "cisco_ios"
+            elif "NX-OS" in sh_ver:
+                hosttype = "cisco_nxos_ssh"
+            elif " Adaptive Security Appliance" in sh_ver:
+                hosttype = "asa"
+            else:
+                hosttype = "other"
             ssh.disconnect()
+        else:
             ssh_session = ConnectHandler(device_type="paloalto_panos", ip=IP, username=username, password=password)
+            hostname = ssh_session.find_prompt()
             testpalo = ssh_session.send_command("show system info")
             if "model: PA-" in testpalo:
                 hosttype = "palo"
-                hostname = hostname.split("@")[1]
-        else:
-            hosttype = "other"
+                hostname = hostname.split("@")[1]+"@"
+            ssh_session.disconnect()
+
+
         #### Now in DB  ####
         #device = {"host":IP,
         #    "hostname":hostname[:-1],
@@ -219,16 +229,16 @@ def device_discovery():
 
 @app.route("/discover_loading")
 def discover_loading():
+    global ip_network
     content=get_status()
-    return render_template('loading_discover.html', status=content, text='One moment, I just discover the devices ...')
-
+    NumberHosts = len(list(ipaddress.IPv4Network(ip_network).hosts()))
+    print (NumberHosts)
+    return render_template('loading_discover.html', status=content, text=f'One moment, I just discover {NumberHosts} devices ...')
 
 @app.route("/dump_loading")
 def dump_loading():
     content=get_status()
     return render_template('loading_dump.html', status=content, text='Now I dump the devices and parse the receiving data ...')
-
-
 
 @app.route("/about")
 def about():

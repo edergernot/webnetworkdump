@@ -28,11 +28,14 @@ Flask-Compress==1.10.1
 Flask-SQLAlchemy==2.5.1
 Flask-WTF==0.15.1
 future==0.18.2
-genie.libs.filetransferutils==21.9
-genie.libs.health==21.9.1
-genie.libs.ops==21.9
-genie.libs.parser==21.9
-genie.libs.sdk==21.9
+genie==21.10
+genie.libs.clean==21.10
+genie.libs.conf==21.10
+genie.libs.filetransferutils==21.10
+genie.libs.health==21.10
+genie.libs.ops==21.10
+genie.libs.parser==21.10
+genie.libs.sdk==21.10
 greenlet==1.1.1
 idna==3.3
 itsdangerous==2.0.1
@@ -78,7 +81,6 @@ python-socketio==4.6.1
 pytz==2021.1
 PyYAML==6.0
 requests==2.26.0
-rich==10.15.2
 ruamel.yaml==0.17.16
 ruamel.yaml.clib==0.2.6
 scp==0.13.6
