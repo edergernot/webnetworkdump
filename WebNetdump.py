@@ -16,6 +16,7 @@ import subprocess
 import webbrowser
 from flask_sqlalchemy import SQLAlchemy
 import db_model
+import genieparser
 
 
 app = Flask(__name__)
@@ -33,6 +34,7 @@ password = ""
 ip_network = ""
 ssh_enabled_ips = []
 dump_data = {}
+dump_data_genie = {}
 excelfiles = 0
 config_files = 0
 
@@ -98,7 +100,7 @@ def worker_ssh_logon(IP):
         testdev = {'device_type':"autodetect", 'ip':IP, 'username':username, 'password':password}
         sshtest = SSHDetect(**testdev)
         device_type = sshtest.autodetect()
-        print (f"{IP}: {device_type}")
+        # print (f"{IP}: {device_type}") ## debug
         if device_type == None:
             device_type = 'paloalto_panos'
         if device_type != 'paloalto_panos':
@@ -123,22 +125,9 @@ def worker_ssh_logon(IP):
             if "model: PA-" in testpalo:
                 hosttype = "palo"
                 hostname = hostname.split("@")[1]+"@"
+                hostname = hostname[:-1]
             ssh_session.disconnect()
 
-
-        #### Now in DB  ####
-        #device = {"host":IP,
-        #    "hostname":hostname[:-1],
-        #    "auth_username":username,
-        #    "auth_password":password,
-        #    "type":hosttype,
-        #    "transport":"paramiko",
-        #    "auth_strict_key": False,
-        #    "enabled":True
-        #    }
-        #networkdevices.append(device)
-
-        # Add Device to Database (network_device)
         db_device=network_device(
             device_name=hostname[:-1],
             device_ip=IP,
@@ -190,6 +179,17 @@ def add_to_data(key,data,hostname):
         for k in line.keys():
             item[k]=line[k]
         dump_data[key].append(item)
+
+def add_to_data_genie(key,data,hostname):
+    global dump_data_genie
+    if key not in  dump_data_genie.keys():
+        dump_data_genie[key]=[]
+    for line in data:
+        item ={}
+        item['Devicename']=hostname
+        for k in line.keys():
+            item[k]=line[k]
+        dump_data_genie[key].append(item)
 
 def add_to_data_vrf(key,data,hostname,vrf):
     global dump_data
@@ -270,7 +270,11 @@ def dump():
         files.remove("running")
     except Exception:
         pass
-    #Parsing the Dump-Files
+
+    ##################
+    # Parsing Text FSM the Dump-Files
+    ################
+    
     OUTPUT_DIR="./dump/parsed"
     # if no dum exists, create one
     if not os.path.exists("./dump"):
@@ -298,9 +302,12 @@ def dump():
                 path = os.path.join(DUMP_DIR,"parsed")
                 os.mkdir(path)
             outputfile = f"{OUTPUT_DIR}/{file[:-12]}_parsed.json"
+            outputfile_genie = f"{OUTPUT_DIR}/{file[:-12]}_genieparsed.txt"
+        
             with open(outputfile, "w") as outfile:
-                outfile.write("")
-
+                outfile.write("")  ## Delete Output File
+            with open(outputfile_genie, "w") as outfile_genie:
+                outfile_genie.write("")  ## Delete Output File
             for command in commands:
                 ### Run Parser, get back Command and Json as Tuble, if worked  ###
                 if command == "":
@@ -312,8 +319,13 @@ def dump():
                         nos="asa"
                 if "show system info\n" in command:
                     nos="panos"
-                parsed_output = parse_textfsm(command,file,nos) 
-                #print(parsed_output)
+                parsed_output = parse_textfsm(command,file,nos)
+                cmd = command.split('**----------------------------------------**')
+                raw_output = cmd[1]
+                raw_command = cmd[0]
+                db_nos = genieparser.get_nos_fromdb(GetDevicesFromDB(),hostname)
+                genie_nos = genieparser.convert_dbnos_genienos(db_nos)
+                genie_parsed = genieparser.genie_parse(raw_command, raw_output, genie_nos)
                 if parsed_output==("Error","Error"):  #Error in parsing, Next Commmand
                    #print("Error while Parsing")
                    continue
@@ -326,7 +338,6 @@ def dump():
                     add_to_data_vrf(key,parsed_output[1],hostname,parsed_output[2])
                 else:
                     add_to_data(key,parsed_output[1],hostname)
-
                 with open(outputfile, "a") as f:
                     f.write(f"{parsed_output[0]}:\n{str(parsed_output[1])}\n")
         except IsADirectoryError:
@@ -347,7 +358,96 @@ def dump():
     content=get_status()
     return render_template("parse.html",status=content)
 
-@app.route("/progress")
+@app.route("/hidden_parse")
+def hidden_parse():
+    ##################
+    # Parsing Text FSM the Dump-Files
+    ################
+    
+    OUTPUT_DIR="./dump/parsed"
+    # if no dum exists, create one
+    if not os.path.exists("./dump"):
+        return redirect(url_for('dump'))
+    files = os.listdir(DUMP_DIR)  
+    for file in files:
+        nos = "ios"
+        filename = f"{DUMP_DIR}/{file}"
+        print(f"Parsing File: {file}")
+        if "_originalFiles.txt" in filename:   # OriginalFiles ??? from CLI Tool
+            with open(filename) as f:
+                originated_path=f.read().split(" ")[-1]
+            continue
+        hostname = file[:-12]
+        try: 
+            with open(filename) as f:
+                data = f.read()
+            #### Split Large Snapshot file to Command-List with Output ####
+            commands = split_commands(data)
+
+            ### Create "parsed" Folder if not exist ###
+            if os.path.exists(OUTPUT_DIR):  
+                pass
+            else:
+                path = os.path.join(DUMP_DIR,"parsed")
+                os.mkdir(path)
+            outputfile = f"{OUTPUT_DIR}/{file[:-12]}_parsed.json"
+            outputfile_genie = f"{OUTPUT_DIR}/{file[:-12]}_genieparsed.txt"
+        
+            with open(outputfile, "w") as outfile:
+                outfile.write("")  ## Delete Output File
+            with open(outputfile_genie, "w") as outfile_genie:
+                outfile_genie.write("")  ## Delete Output File
+            for command in commands:
+                ### Run Parser, get back Command and Json as Tuble, if worked  ###
+                if command == "":
+                    continue
+                if "show version\n" in command:
+                    if "NX-OS" in command:
+                        nos="nxos"
+                    if "Cisco Adaptive Security Appliance" in command:
+                        nos="asa"
+                if "show system info\n" in command:
+                    nos="panos"
+                parsed_output = parse_textfsm(command,file,nos)
+                cmd = command.split('**----------------------------------------**')
+                raw_output = cmd[1]
+                raw_command = cmd[0]
+                db_nos = genieparser.get_nos_fromdb(GetDevicesFromDB(),hostname)
+                genie_nos = genieparser.convert_dbnos_genienos(db_nos)
+                genie_parsed = genieparser.genie_parse(raw_command, raw_output, genie_nos)
+                if parsed_output==("Error","Error"):  #Error in parsing, Next Commmand
+                   #print("Error while Parsing")
+                   continue
+                try: 
+                    key=nos+"_"+parsed_output[0].replace(" ","_")
+                except TypeError:
+                    print ("Error in parsing")
+                    continue
+                if parsed_output[2] != '':  # vrf in command 
+                    add_to_data_vrf(key,parsed_output[1],hostname,parsed_output[2])
+                else:
+                    add_to_data(key,parsed_output[1],hostname)
+                with open(outputfile, "a") as f:
+                    f.write(f"{parsed_output[0]}:\n{str(parsed_output[1])}\n")
+        except IsADirectoryError:
+            pass  
+    excelfiles = 0
+    for k in dump_data.keys():
+        try: 
+            if dump_data[k] == []:
+                continue
+            df = pandas.DataFrame(dump_data[k])
+            df.to_excel(f"{OUTPUT_DIR}/{k}.xlsx")
+            print (f"Generated {k} Excel-File")
+            excelfiles += 1
+        except Exception as e:
+            print(e)
+    shutil.make_archive("./output/NetworkDump", 'zip', "./dump") # create NetworkDump.zip from folder dump
+    pickle.dump(dump_data, open("dump_data.pickle", "wb")) # save 'dump_data' dictonary to file
+    content=get_status()
+    return render_template("parse.html",status=content)
+
+@app.route("/progress") #Do Discovery
 def progress():
     global username, password, ip_network, ssh_enabled_ips
     content=get_status()
@@ -356,12 +456,16 @@ def progress():
     #form = DeviceDiscoveryForm()
     ssh_enabled_ips=tcpscan(ip_network)
     unique_ips = list(set(ssh_enabled_ips))
+    if len(unique_ips) == 0:
+        flash('No Devices to login via SSH', 'danger')
+        content=get_status()
+        return redirect(url_for('device_discovery'))
     try_logon(unique_ips)
     content=get_status()
     return render_template("/progress_logon.html",status=content)
 
 @app.route("/device_view")
-def device_view():# Not working Now
+def device_view():# Shows Devices in Device - DB
     netdevices = network_device.query.all()
     content=get_status()
     return render_template("/device_view.html", status=content, devices=netdevices)

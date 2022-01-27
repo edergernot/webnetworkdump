@@ -13,8 +13,8 @@ edge_elements = []
 root_node = ""
 
 k = Data_Dump.keys()
-if "show_cdp_neighbors_detail" in k:
-    CDPs = Data_Dump["show_cdp_neighbors_detail"]
+if "ios_show_cdp_neighbors_detail" in k:
+    CDPs = Data_Dump["ios_show_cdp_neighbors_detail"]
 else:
     CDPs = []
 

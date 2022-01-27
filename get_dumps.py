@@ -62,7 +62,12 @@ PALO_COMMANDS = ["show system info",
                  "show interface logical",
                  "show arp all",
                  "show routing route",
-                 "show config running"]
+                 "show config running",
+                 "show global-protect-gateway current-user",
+                 "show global-protect-gateway previous-user",
+                 "show global-protect-gateway statistics",
+                 "show session meter"
+                 ]
 
 ASA_COMMANDS = ["show clock",
             "show version",
@@ -73,9 +78,9 @@ ASA_COMMANDS = ["show clock",
             "show route",
             "show ospf",
             "show ospf neighbor",
-            "show bgp summary"
+            "show bgp summary",
             "show arp",
-            "show vpn-sessiondb"
+            "show vpn-sessiondb",
             "show vpn-sessiondb detail l2l",
             "show vpn-sessiondb anyconnect",
             "show failover",
