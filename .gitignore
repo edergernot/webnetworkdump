@@ -11,3 +11,5 @@ __pycache__/
 *pychache*
 *.pickle
 *.sqlite3
+venv/
+**/__pycache__/

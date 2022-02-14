@@ -124,9 +124,11 @@ def dump_worker(device:dict):   #  Main Thread for SSH-Session and File creation
                     outputfile.write("**"+"-"*40+"**")
                     outputfile.write("\n")
                     commandoutput = ssh_session.send_command(command)
-                    if command == "show ip vrf" and len(commandoutput.result.split("\n")) > 2:
-                        vrf_enabled = True
-                        vrf_output = commandoutput.result
+                    if command == "show ip vrf":
+                        if len(commandoutput.split("\n")) >= 2:
+                            vrf_enabled = True
+                            vrf_output = commandoutput.result
+                            print (vrf_output) #Debug
                     outputfile.write(commandoutput.result) 
                     outputfile.write("\n")
                     outputfile.write("*"*40)

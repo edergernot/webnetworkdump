@@ -84,9 +84,8 @@ def GetDevicesFromDB():
         networkdevices.append(device)
     return(networkdevices)
          
-
-#Task have share Global Vars have to be in Main-App
 def worker_ssh_test(IP):
+    #Task have share Global Vars have to be in Main-App
     global reachable
     if tcpping(str(IP),22,4):
         reachable.append(str(IP))
@@ -325,7 +324,7 @@ def dump():
                 raw_command = cmd[0]
                 db_nos = genieparser.get_nos_fromdb(GetDevicesFromDB(),hostname)
                 genie_nos = genieparser.convert_dbnos_genienos(db_nos)
-                genie_parsed = genieparser.genie_parse(raw_command, raw_output, genie_nos)
+                #genie_parsed = genieparser.genie_parse(raw_command, raw_output, genie_nos)
                 if parsed_output==("Error","Error"):  #Error in parsing, Next Commmand
                    #print("Error while Parsing")
                    continue
@@ -449,6 +448,8 @@ def hidden_parse():
 
 @app.route("/progress") #Do Discovery
 def progress():
+
+
     global username, password, ip_network, ssh_enabled_ips
     content=get_status()
     render_template("/progress.html", ip_network=ip_network, title="TCP Scan", hosts=ssh_enabled_ips,status=content)

@@ -34,7 +34,7 @@ def parse_textfsm(data,file,nos):
         platform="cisco_nxos"
     elif platform == "iosxe":
         platform="cisco_ios"
-    elif platform == "palos":
+    elif platform == "palo":
         platform="paloalto_panos"
     elif platform == "asa":
         platform="cisco_asa"
@@ -75,12 +75,5 @@ def get_devtype_from_deb (device_name): #queries the db for devicetype
     with engine.connect() as connection:
         result = connection.execute(text(f"select * from network_device where device_name='{device_name}'"))
         for r in result:
-            print(f"{device_name}: {r}")
             device_type = r['device_type']
-        #try:
-        #    print (f"Device_Type: {device_type}")
-        #except refe as e:
-        #    print(e)
-        #    return ()
-
     return (device_type)
