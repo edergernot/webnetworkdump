@@ -1,7 +1,10 @@
 import pickle
 import dash
 import dash_cytoscape as cyto
+from dash.dependencies import Input, Output, State
 import dash_html_components as html
+import dash_core_components as dcc
+
 
 Data_Dump = pickle.load(open("dump_data.pickle", "rb"))
 
@@ -101,8 +104,14 @@ root_node = f"'[ id = {root_node}]'"
 
 cyto_elements = node_elements
 
+####  
+# https://github.com/plotly/dash-cytoscape/blob/master/demos/
+####
+
+
 app = dash.Dash(__name__)
 app.layout = html.Div([
+    html.Div(className='ten columns', children=[html.Button("Remove Selected Node", id='remove-button'),
     cyto.Cytoscape(
         id='cytoscape',
         elements=cyto_elements,
@@ -163,9 +172,26 @@ app.layout = html.Div([
                  'width': '100px',
                  'height': '100px'
              }},
-            ]
-    )])
+             ]),       
+            ]),
+])
+
+
+
+@app.callback(Output('cytoscape', 'elements'),
+              [Input('remove-button', 'n_clicks')],
+              [State('cytoscape', 'elements'),
+               State('cytoscape', 'selectedNodeData')])
+def remove_selected_nodes(_, elements, data):
+    if elements and data:
+        ids_to_remove = {ele_data['id'] for ele_data in data}
+        print("Before:", elements)
+        new_elements = [ele for ele in elements if ele['data']['id'] not in ids_to_remove]
+        print("After:", new_elements)
+        return new_elements
+
+    return elements
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True, host="0.0.0.0")
+    app.run_server(host="0.0.0.0")
