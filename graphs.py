@@ -105,13 +105,19 @@ root_node = f"'[ id = {root_node}]'"
 cyto_elements = node_elements
 
 ####  
-# https://github.com/plotly/dash-cytoscape/blob/master/demos/
+#
+#  https://github.com/plotly/dash-cytoscape/blob/master/demos/
+#
 ####
 
+cyto.load_extra_layouts() 
 
 app = dash.Dash(__name__)
 app.layout = html.Div([
-    html.Div(className='ten columns', children=[html.Button("Remove Selected Node", id='remove-button'),
+    html.Div(className='Buttons', children=[html.Button("Remove Selected Node", id='remove-button'),
+    html.Button("Export Picture", id='export-button'),
+    html.Button("Export Data", id='data-export-button'),
+    html.Title(id="image-text"),
     cyto.Cytoscape(
         id='cytoscape',
         elements=cyto_elements,
@@ -185,13 +191,32 @@ app.layout = html.Div([
 def remove_selected_nodes(_, elements, data):
     if elements and data:
         ids_to_remove = {ele_data['id'] for ele_data in data}
-        print("Before:", elements)
+        # print("Before:", elements) # Debug
         new_elements = [ele for ele in elements if ele['data']['id'] not in ids_to_remove]
-        print("After:", new_elements)
+        # print("After:", new_elements) #Debug
         return new_elements
 
     return elements
 
+
+
+@app.callback(Output("cytoscape", "generateImage"),
+    [Input("export-button", "n_clicks")])
+def get_image(get_export_clicks):
+    # File type to ouput of 'svg, 'png', 'jpg', or 'jpeg' (alias of 'jpg')
+    ftype = "jpg"
+    # 'store': Stores the image data in 'imageData' !only jpg/png are supported
+    # 'download'`: Downloads the image as a file with all data handling
+    # 'both'`: Stores image data and downloads image as file.
+    action = 'download'
+    ctx = dash.callback_context
+    # print (ctx)
+    return {
+        'type': ftype,
+        'action': action
+        }
+
+@app.callback(Output("cytoscape", ""))
 
 if __name__ == '__main__':
     app.run_server(host="0.0.0.0")
