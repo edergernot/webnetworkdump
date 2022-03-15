@@ -18,9 +18,10 @@ def split_commands(text):
 def parse_textfsm(data,file,nos):
     from ntc_templates.parse import parse_output 
     import os
+    device_name=file[:-12]
     RUN_DIR="./dump/running"
     vrf = ""
-    platform="cisco_ios"
+    platform=get_devtype_from_deb(device_name)
     text=data.split('**----------------------------------------**')
     if len(text) <= 1:  # No usefull data
         return 
@@ -29,28 +30,50 @@ def parse_textfsm(data,file,nos):
         vrf = command.split(" ")[-1]
         command = "show ip arp"
     raw_cli_output=text[1]
-    if nos == "nxos":
+    if platform == "nxos":
         platform="cisco_nxos"
-    if nos == "iosxe":
+    elif platform == "iosxe":
         platform="cisco_ios"
-    if nos == "panos":
+    elif platform == "palo":
         platform="paloalto_panos"
+    elif platform == "asa":
+        platform="cisco_asa"
     if "show running" in command:
         if not os.path.isdir(RUN_DIR):
             os.makedirs(RUN_DIR)
-        runnningfile = f"{RUN_DIR}/{file[:-12]}_running.txt"
+        runnningfile = f"{RUN_DIR}/{device_name}_running.txt"
         with open(runnningfile,"w") as f:
             f.write(raw_cli_output) 
     if "show config running" in command:
         if not os.path.isdir(RUN_DIR):
             os.makedirs(RUN_DIR)
-        runnningfile = f"{RUN_DIR}/{file[:-12]}_running.txt"
+        runnningfile = f"{RUN_DIR}/{device_name}_running.txt"
         with open(runnningfile,"w") as f:
             f.write(raw_cli_output) 
     try:    
         parsed_output = parse_output(platform=platform, command=command, data=raw_cli_output)
     except Exception as e:
-        #print (f"Error with Textfsm-Parser\n{e}")
+        #print(e)
         return("Error","Error")
     return(command, parsed_output, vrf)
 
+
+def convert_dbnos_genienos(db_nos):
+    if db_nos == "ios":
+        return ("ios")
+    elif db_nos == "ios-xe":
+        return ("iosxe")
+    elif db_nos == "asa":
+        return ("asa")
+    else:
+        return ()
+        
+def get_devtype_from_deb (device_name): #queries the db for devicetype
+    from sqlalchemy import create_engine
+    from sqlalchemy import text
+    engine = create_engine('sqlite:///dump_db.sqlite3')
+    with engine.connect() as connection:
+        result = connection.execute(text(f"select * from network_device where device_name='{device_name}'"))
+        for r in result:
+            device_type = r['device_type']
+    return (device_type)

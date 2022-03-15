@@ -4,8 +4,12 @@
 ./output*
 ./venv*
 ./venv/*
+./__pycache__*
+./__pycache__/*
+__pycache__/
+*.pyc
 *pychache*
 *.pickle
 *.sqlite3
-./__pycache__*
-./__pycache__/*
+venv/
+**/__pycache__/

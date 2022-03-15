@@ -7,7 +7,7 @@ from forms import DeviceDiscoveryForm
 from discovery import *  
 from get_dumps import *
 from parse_files import *
-from netmiko import ConnectHandler
+from netmiko import ConnectHandler, SSHDetect
 from ntc_templates.parse import parse_output 
 import pandas
 import shutil
@@ -16,6 +16,7 @@ import subprocess
 import webbrowser
 from flask_sqlalchemy import SQLAlchemy
 import db_model
+import genieparser
 
 
 app = Flask(__name__)
@@ -33,6 +34,7 @@ password = ""
 ip_network = ""
 ssh_enabled_ips = []
 dump_data = {}
+dump_data_genie = {}
 excelfiles = 0
 config_files = 0
 
@@ -82,9 +84,8 @@ def GetDevicesFromDB():
         networkdevices.append(device)
     return(networkdevices)
          
-
-#Task have share Global Vars have to be in Main-App
 def worker_ssh_test(IP):
+    #Task have share Global Vars have to be in Main-App
     global reachable
     if tcpping(str(IP),22,4):
         reachable.append(str(IP))
@@ -94,39 +95,38 @@ def worker_ssh_logon(IP):
     ###  Login and add device_dict to networkdevices
     try:
         device={}
-        global networkdevices, username, password,reachable 
-        ssh = ConnectHandler(device_type="cisco_ios", ip=IP, username=username, password=password)
-        hostname = ssh.find_prompt()
-        sh_ver = ssh.send_command("show version")
-        username_len = len(username)
-        if " IOS XE " in sh_ver:
-            hosttype = "ios-xe"
-        elif " IOS " in sh_ver:
-            hosttype = "cisco_ios"
-        elif "NX-OS" in sh_ver:
-            hosttype = "cisco_nxos_ssh"
-        elif hostname[:username_len+1] == username+"@":
+        global networkdevices, username, password,reachable
+        testdev = {'device_type':"autodetect", 'ip':IP, 'username':username, 'password':password}
+        sshtest = SSHDetect(**testdev)
+        device_type = sshtest.autodetect()
+        # print (f"{IP}: {device_type}") ## debug
+        if device_type == None:
+            device_type = 'paloalto_panos'
+        if device_type != 'paloalto_panos':
+            ssh = ConnectHandler(device_type=device_type, ip=IP, username=username, password=password)
+            hostname = ssh.find_prompt()
+            sh_ver = ssh.send_command("show version")
+            if " IOS XE " in sh_ver:
+                hosttype = "ios-xe"
+            elif " IOS " in sh_ver:
+                hosttype = "cisco_ios"
+            elif "NX-OS" in sh_ver:
+                hosttype = "cisco_nxos_ssh"
+            elif " Adaptive Security Appliance" in sh_ver:
+                hosttype = "asa"
+            else:
+                hosttype = "other"
             ssh.disconnect()
+        else:
             ssh_session = ConnectHandler(device_type="paloalto_panos", ip=IP, username=username, password=password)
+            hostname = ssh_session.find_prompt()
             testpalo = ssh_session.send_command("show system info")
             if "model: PA-" in testpalo:
                 hosttype = "palo"
-                hostname = hostname.split("@")[1]
-        else:
-            hosttype = "other"
-        #### Now in DB  ####
-        #device = {"host":IP,
-        #    "hostname":hostname[:-1],
-        #    "auth_username":username,
-        #    "auth_password":password,
-        #    "type":hosttype,
-        #    "transport":"paramiko",
-        #    "auth_strict_key": False,
-        #    "enabled":True
-        #    }
-        #networkdevices.append(device)
+                hostname = hostname.split("@")[1]+"@"
+                hostname = hostname[:-1]
+            ssh_session.disconnect()
 
-        # Add Device to Database (network_device)
         db_device=network_device(
             device_name=hostname[:-1],
             device_ip=IP,
@@ -139,7 +139,7 @@ def worker_ssh_logon(IP):
         reachable = []
 
     except Exception as e:
-        print (e)
+        print(e)
     return
 
 def tcpscan(ip_network):
@@ -179,6 +179,17 @@ def add_to_data(key,data,hostname):
             item[k]=line[k]
         dump_data[key].append(item)
 
+def add_to_data_genie(key,data,hostname):
+    global dump_data_genie
+    if key not in  dump_data_genie.keys():
+        dump_data_genie[key]=[]
+    for line in data:
+        item ={}
+        item['Devicename']=hostname
+        for k in line.keys():
+            item[k]=line[k]
+        dump_data_genie[key].append(item)
+
 def add_to_data_vrf(key,data,hostname,vrf):
     global dump_data
     if key not in  dump_data.keys():
@@ -217,16 +228,16 @@ def device_discovery():
 
 @app.route("/discover_loading")
 def discover_loading():
+    global ip_network
     content=get_status()
-    return render_template('loading_discover.html', status=content, text='Discovery the Devices ...')
-
+    NumberHosts = len(list(ipaddress.IPv4Network(ip_network).hosts()))
+    print (NumberHosts)
+    return render_template('loading_discover.html', status=content, text=f'One moment, I just discover {NumberHosts} devices ...')
 
 @app.route("/dump_loading")
 def dump_loading():
     content=get_status()
-    return render_template('loading_dump.html', status=content, text='Dumping the Devices ...')
-
-
+    return render_template('loading_dump.html', status=content, text='Now I dump the devices and parse the receiving data ...')
 
 @app.route("/about")
 def about():
@@ -258,7 +269,11 @@ def dump():
         files.remove("running")
     except Exception:
         pass
-    #Parsing the Dump-Files
+
+    ##################
+    # Parsing Text FSM the Dump-Files
+    ################
+    
     OUTPUT_DIR="./dump/parsed"
     # if no dum exists, create one
     if not os.path.exists("./dump"):
@@ -286,9 +301,12 @@ def dump():
                 path = os.path.join(DUMP_DIR,"parsed")
                 os.mkdir(path)
             outputfile = f"{OUTPUT_DIR}/{file[:-12]}_parsed.json"
+            outputfile_genie = f"{OUTPUT_DIR}/{file[:-12]}_genieparsed.txt"
+        
             with open(outputfile, "w") as outfile:
-                outfile.write("")
-
+                outfile.write("")  ## Delete Output File
+            with open(outputfile_genie, "w") as outfile_genie:
+                outfile_genie.write("")  ## Delete Output File
             for command in commands:
                 ### Run Parser, get back Command and Json as Tuble, if worked  ###
                 if command == "":
@@ -296,15 +314,22 @@ def dump():
                 if "show version\n" in command:
                     if "NX-OS" in command:
                         nos="nxos"
+                    if "Cisco Adaptive Security Appliance" in command:
+                        nos="asa"
                 if "show system info\n" in command:
                     nos="panos"
-                parsed_output = parse_textfsm(command,file,nos) 
-                #print(parsed_output)
+                parsed_output = parse_textfsm(command,file,nos)
+                cmd = command.split('**----------------------------------------**')
+                raw_output = cmd[1]
+                raw_command = cmd[0]
+                db_nos = genieparser.get_nos_fromdb(GetDevicesFromDB(),hostname)
+                genie_nos = genieparser.convert_dbnos_genienos(db_nos)
+                #genie_parsed = genieparser.genie_parse(raw_command, raw_output, genie_nos)
                 if parsed_output==("Error","Error"):  #Error in parsing, Next Commmand
                    #print("Error while Parsing")
                    continue
                 try: 
-                    key=parsed_output[0].replace(" ","_")
+                    key=nos+"_"+parsed_output[0].replace(" ","_")
                 except TypeError:
                     print ("Error in parsing")
                     continue
@@ -312,7 +337,6 @@ def dump():
                     add_to_data_vrf(key,parsed_output[1],hostname,parsed_output[2])
                 else:
                     add_to_data(key,parsed_output[1],hostname)
-
                 with open(outputfile, "a") as f:
                     f.write(f"{parsed_output[0]}:\n{str(parsed_output[1])}\n")
         except IsADirectoryError:
@@ -327,14 +351,105 @@ def dump():
             print (f"Generated {k} Excel-File")
             excelfiles += 1
         except Exception as e:
-            print (e)
+            print(e)
     shutil.make_archive("./output/NetworkDump", 'zip', "./dump") # create NetworkDump.zip from folder dump
     pickle.dump(dump_data, open("dump_data.pickle", "wb")) # save 'dump_data' dictonary to file
     content=get_status()
     return render_template("parse.html",status=content)
 
-@app.route("/progress")
+@app.route("/hidden_parse")
+def hidden_parse():
+    ##################
+    # Parsing Text FSM the Dump-Files
+    ################
+    
+    OUTPUT_DIR="./dump/parsed"
+    # if no dum exists, create one
+    if not os.path.exists("./dump"):
+        return redirect(url_for('dump'))
+    files = os.listdir(DUMP_DIR)  
+    for file in files:
+        nos = "ios"
+        filename = f"{DUMP_DIR}/{file}"
+        print(f"Parsing File: {file}")
+        if "_originalFiles.txt" in filename:   # OriginalFiles ??? from CLI Tool
+            with open(filename) as f:
+                originated_path=f.read().split(" ")[-1]
+            continue
+        hostname = file[:-12]
+        try: 
+            with open(filename) as f:
+                data = f.read()
+            #### Split Large Snapshot file to Command-List with Output ####
+            commands = split_commands(data)
+
+            ### Create "parsed" Folder if not exist ###
+            if os.path.exists(OUTPUT_DIR):  
+                pass
+            else:
+                path = os.path.join(DUMP_DIR,"parsed")
+                os.mkdir(path)
+            outputfile = f"{OUTPUT_DIR}/{file[:-12]}_parsed.json"
+            outputfile_genie = f"{OUTPUT_DIR}/{file[:-12]}_genieparsed.txt"
+        
+            with open(outputfile, "w") as outfile:
+                outfile.write("")  ## Delete Output File
+            with open(outputfile_genie, "w") as outfile_genie:
+                outfile_genie.write("")  ## Delete Output File
+            for command in commands:
+                ### Run Parser, get back Command and Json as Tuble, if worked  ###
+                if command == "":
+                    continue
+                if "show version\n" in command:
+                    if "NX-OS" in command:
+                        nos="nxos"
+                    if "Cisco Adaptive Security Appliance" in command:
+                        nos="asa"
+                if "show system info\n" in command:
+                    nos="panos"
+                parsed_output = parse_textfsm(command,file,nos)
+                cmd = command.split('**----------------------------------------**')
+                raw_output = cmd[1]
+                raw_command = cmd[0]
+                db_nos = genieparser.get_nos_fromdb(GetDevicesFromDB(),hostname)
+                genie_nos = genieparser.convert_dbnos_genienos(db_nos)
+                genie_parsed = genieparser.genie_parse(raw_command, raw_output, genie_nos)
+                if parsed_output==("Error","Error"):  #Error in parsing, Next Commmand
+                   #print("Error while Parsing")
+                   continue
+                try: 
+                    key=nos+"_"+parsed_output[0].replace(" ","_")
+                except TypeError:
+                    print ("Error in parsing")
+                    continue
+                if parsed_output[2] != '':  # vrf in command 
+                    add_to_data_vrf(key,parsed_output[1],hostname,parsed_output[2])
+                else:
+                    add_to_data(key,parsed_output[1],hostname)
+                with open(outputfile, "a") as f:
+                    f.write(f"{parsed_output[0]}:\n{str(parsed_output[1])}\n")
+        except IsADirectoryError:
+            pass  
+    excelfiles = 0
+    for k in dump_data.keys():
+        try: 
+            if dump_data[k] == []:
+                continue
+            df = pandas.DataFrame(dump_data[k])
+            df.to_excel(f"{OUTPUT_DIR}/{k}.xlsx")
+            print (f"Generated {k} Excel-File")
+            excelfiles += 1
+        except Exception as e:
+            print(e)
+    shutil.make_archive("./output/NetworkDump", 'zip', "./dump") # create NetworkDump.zip from folder dump
+    pickle.dump(dump_data, open("dump_data.pickle", "wb")) # save 'dump_data' dictonary to file
+    content=get_status()
+    return render_template("parse.html",status=content)
+
+@app.route("/progress") #Do Discovery
 def progress():
+
+
     global username, password, ip_network, ssh_enabled_ips
     content=get_status()
     render_template("/progress.html", ip_network=ip_network, title="TCP Scan", hosts=ssh_enabled_ips,status=content)
@@ -342,12 +457,16 @@ def progress():
     #form = DeviceDiscoveryForm()
     ssh_enabled_ips=tcpscan(ip_network)
     unique_ips = list(set(ssh_enabled_ips))
+    if len(unique_ips) == 0:
+        flash('No Devices to login via SSH', 'danger')
+        content=get_status()
+        return redirect(url_for('device_discovery'))
     try_logon(unique_ips)
     content=get_status()
     return render_template("/progress_logon.html",status=content)
 
 @app.route("/device_view")
-def device_view():# Not working Now
+def device_view():# Shows Devices in Device - DB
     netdevices = network_device.query.all()
     content=get_status()
     return render_template("/device_view.html", status=content, devices=netdevices)

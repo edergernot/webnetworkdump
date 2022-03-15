@@ -62,8 +62,35 @@ PALO_COMMANDS = ["show system info",
                  "show interface logical",
                  "show arp all",
                  "show routing route",
-                 "show config running"]
+                 "show config running",
+                 "show global-protect-gateway current-user",
+                 "show global-protect-gateway previous-user",
+                 "show global-protect-gateway statistics",
+                 "show session meter"
+                 ]
 
+ASA_COMMANDS = ["show clock",
+            "show version",
+            "show running",
+            "show inventory",
+            "show interface detail",
+            "show interface",
+            "show route",
+            "show ospf",
+            "show ospf neighbor",
+            "show bgp summary",
+            "show arp",
+            "show vpn-sessiondb",
+            "show vpn-sessiondb detail l2l",
+            "show vpn-sessiondb anyconnect",
+            "show failover",
+            "show asp drop",
+            "show name",
+            "show xlate",
+            "show running-config object network",
+            "show ipv6 route",
+            "show ipv6 neighbor",
+            "show ipv6 ospf"]
 
 
 
@@ -78,6 +105,7 @@ def dump_worker(device:dict):   #  Main Thread for SSH-Session and File creation
         device_type = device.pop("type")
         hostname = device.pop("hostname")
         enabled = device.pop("enabled")
+        #print(f"{hostname} : {device_type}")
         if device_type == "other":
             return
         if not enabled:
@@ -96,9 +124,11 @@ def dump_worker(device:dict):   #  Main Thread for SSH-Session and File creation
                     outputfile.write("**"+"-"*40+"**")
                     outputfile.write("\n")
                     commandoutput = ssh_session.send_command(command)
-                    if command == "show ip vrf" and len(commandoutput.result.split("\n")) > 2:
-                        vrf_enabled = True
-                        vrf_output = commandoutput.result
+                    if command == "show ip vrf":
+                        if len(commandoutput.split("\n")) >= 2:
+                            vrf_enabled = True
+                            vrf_output = commandoutput.result
+                            print (vrf_output) #Debug
                     outputfile.write(commandoutput.result) 
                     outputfile.write("\n")
                     outputfile.write("*"*40)
@@ -144,14 +174,37 @@ def dump_worker(device:dict):   #  Main Thread for SSH-Session and File creation
             pwd = device["auth_password"]
             ssh_session = ConnectHandler(device_type="paloalto_panos", ip=hostip, username=user, password=pwd)
             prompt = ssh_session.find_prompt()
-            links = prompt.split("(")[0]
-            hostname = links.split("@")[1]
-            hostfilename = hostname +"_command.txt"
+            hostname = prompt.split("@")[1]
+            hostfilename = hostname[:-1] +"_command.txt"
             with open (f"{OUTPUT_DIR}/{hostfilename}","w") as outputfile:
                 outputfile.write("\n")
                 outputfile.write("*"*40)
                 outputfile.write("\n") 
                 for command in PALO_COMMANDS:
+                    outputfile.write(command)
+                    outputfile.write("\n")
+                    outputfile.write("**"+"-"*40+"**")
+                    outputfile.write("\n")
+                    commandoutput = ssh_session.send_command(command)
+                    outputfile.write(commandoutput) 
+                    outputfile.write("\n")
+                    outputfile.write("*"*40)
+                    outputfile.write("\n")
+                ssh_session.disconnect()
+        
+        #### Do commands on Cisco ASA ####
+        elif device_type == "asa":
+            hostip=device["host"]
+            user = device["auth_username"]
+            pwd = device["auth_password"]
+            ssh_session = ConnectHandler(device_type="cisco_asa", ip=hostip, username=user, password=pwd)
+            prompt = ssh_session.find_prompt()
+            hostfilename = hostname +"_command.txt"
+            with open (f"{OUTPUT_DIR}/{hostfilename}","w") as outputfile:
+                outputfile.write("\n")
+                outputfile.write("*"*40)
+                outputfile.write("\n") 
+                for command in ASA_COMMANDS:
                     outputfile.write(command)
                     outputfile.write("\n")
                     outputfile.write("**"+"-"*40+"**")

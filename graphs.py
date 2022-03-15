@@ -1,7 +1,10 @@
 import pickle
 import dash
 import dash_cytoscape as cyto
+from dash.dependencies import Input, Output, State
 import dash_html_components as html
+import dash_core_components as dcc
+
 
 Data_Dump = pickle.load(open("dump_data.pickle", "rb"))
 
@@ -13,8 +16,8 @@ edge_elements = []
 root_node = ""
 
 k = Data_Dump.keys()
-if "show_cdp_neighbors_detail" in k:
-    CDPs = Data_Dump["show_cdp_neighbors_detail"]
+if "ios_show_cdp_neighbors_detail" in k:
+    CDPs = Data_Dump["ios_show_cdp_neighbors_detail"]
 else:
     CDPs = []
 
@@ -101,8 +104,20 @@ root_node = f"'[ id = {root_node}]'"
 
 cyto_elements = node_elements
 
+####  
+#
+#  https://github.com/plotly/dash-cytoscape/blob/master/demos/
+#
+####
+
+cyto.load_extra_layouts() 
+
 app = dash.Dash(__name__)
 app.layout = html.Div([
+    html.Div(className='Buttons', children=[html.Button("Remove Selected Node", id='remove-button'),
+    html.Button("Export Picture", id='export-button'),
+    html.Button("Export Data", id='data-export-button'),
+    html.Title(id="image-text"),
     cyto.Cytoscape(
         id='cytoscape',
         elements=cyto_elements,
@@ -163,9 +178,45 @@ app.layout = html.Div([
                  'width': '100px',
                  'height': '100px'
              }},
-            ]
-    )])
+             ]),       
+            ]),
+])
 
+
+
+@app.callback(Output('cytoscape', 'elements'),
+              [Input('remove-button', 'n_clicks')],
+              [State('cytoscape', 'elements'),
+               State('cytoscape', 'selectedNodeData')])
+def remove_selected_nodes(_, elements, data):
+    if elements and data:
+        ids_to_remove = {ele_data['id'] for ele_data in data}
+        # print("Before:", elements) # Debug
+        new_elements = [ele for ele in elements if ele['data']['id'] not in ids_to_remove]
+        # print("After:", new_elements) #Debug
+        return new_elements
+
+    return elements
+
+
+
+@app.callback(Output("cytoscape", "generateImage"),
+    [Input("export-button", "n_clicks")])
+def get_image(get_export_clicks):
+    # File type to ouput of 'svg, 'png', 'jpg', or 'jpeg' (alias of 'jpg')
+    ftype = "jpg"
+    # 'store': Stores the image data in 'imageData' !only jpg/png are supported
+    # 'download'`: Downloads the image as a file with all data handling
+    # 'both'`: Stores image data and downloads image as file.
+    action = 'download'
+    ctx = dash.callback_context
+    # print (ctx)
+    return {
+        'type': ftype,
+        'action': action
+        }
+
+@app.callback(Output("cytoscape", ""))
 
 if __name__ == '__main__':
-    app.run_server(debug=True, host="0.0.0.0")
+    app.run_server(host="0.0.0.0")
