@@ -322,8 +322,8 @@ def dump():
                 cmd = command.split('**----------------------------------------**')
                 raw_output = cmd[1]
                 raw_command = cmd[0]
-                db_nos = genieparser.get_nos_fromdb(GetDevicesFromDB(),hostname)
-                genie_nos = genieparser.convert_dbnos_genienos(db_nos)
+                #db_nos = genieparser.get_nos_fromdb(GetDevicesFromDB(),hostname)
+                #genie_nos = genieparser.convert_dbnos_genienos(db_nos)
                 #genie_parsed = genieparser.genie_parse(raw_command, raw_output, genie_nos)
                 if parsed_output==("Error","Error"):  #Error in parsing, Next Commmand
                    #print("Error while Parsing")

@@ -216,7 +216,6 @@ def get_image(get_export_clicks):
         'action': action
         }
 
-@app.callback(Output("cytoscape", ""))
 
 if __name__ == '__main__':
     app.run_server(host="0.0.0.0")
