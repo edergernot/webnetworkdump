@@ -32,7 +32,7 @@ def parse_textfsm(data,file,nos):
     raw_cli_output=text[1]
     if platform == "nxos":
         platform="cisco_nxos"
-    elif platform == "iosxe":
+    elif platform == "ios-xe":
         platform="cisco_ios"
     elif platform == "palo":
         platform="paloalto_panos"
