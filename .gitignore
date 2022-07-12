@@ -1,0 +1,15 @@
+./dump/*
+./dump*
+./output/*
+./output*
+./venv*
+./venv/*
+./__pycache__*
+./__pycache__/*
+__pycache__/
+*.pyc
+*pychache*
+*.pickle
+*.sqlite3
+venv/
+**/__pycache__/
