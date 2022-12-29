@@ -6,10 +6,13 @@
 ./venv/*
 ./__pycache__*
 ./__pycache__/*
-__pycache__/
+./__pycache__
 *.pyc
 *pychache*
 *.pickle
 *.sqlite3
 venv/
+win_venv/
 **/__pycache__/
+.vscode
+./__pycache__/*
