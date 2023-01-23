@@ -38,5 +38,6 @@ def __init__(self, mac_address, device_name, device_port, port_vlan, mac_type):
    self.port_vlan = port_vlan
    self.mac_type = mac_type
    
-
-db.create_all()
+@app.cli.command()
+def __init__(self):
+   db.create_all()
