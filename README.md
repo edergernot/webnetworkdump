@@ -1,4 +1,7 @@
-# WebNetworkDump
+# WebNetworkDump   ---   Allready depricated
+# Please checkout : https://github.com/edergernot/WebNetworkgraph and https://github.com/edergernot/WebNetworkDump1.1 which will do basicly the same.
+
+
 This should help networkengineers for giving an overview of new networks. It will ask for IP-Network to do a tcp portscan. It will try to login via SSH and find the devicetype.
 
 Then it will login and execute a buntch of "show-commands" depending on devicetype. The ouput will be parsed and some Excelfiles will be generated. Commands which will be executed can be modified in "get_dumps.py" file. 
